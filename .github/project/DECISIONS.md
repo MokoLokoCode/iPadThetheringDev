@@ -119,7 +119,7 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
   - Rely on ordinary care — rejected; both near-misses were written by someone being careful, and neither produced a failing test.
   - Ban speculation about people entirely — rejected; attributed positions are genuinely useful. "Asked for in review on PR #2" is exactly the kind of fact a decision record should hold.
 - Rationale: It is the existing evidence discipline applied to people instead of hardware. The repository already refuses to call a capability verified without a device run; a claim about a colleague deserves the same sourcing, and has weaker natural defenses — hardware guesses eventually fail loudly, guesses about people just sit there and get built upon.
-- Deviations: None. The two instances that prompted this were corrected in the same commit as this entry.
+- Deviations: None outstanding. Three instances prompted or followed this entry, all corrected. The third is instructive: the rule as first written said "state your own and leave theirs open", and `GIT.md` duly named one contributor's branch namespace as the example. That satisfies the letter of the rule and still gives a co-owned document an owner. The rule now covers filling in your own conventions too, and `GIT.md` gives the shape with no example.
 
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,

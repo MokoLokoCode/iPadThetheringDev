@@ -39,7 +39,7 @@ can assert what the repository shows. They cannot assert what a person thinks, w
 or is doing.
 
 - **Write the observable, not the inference.** "No open work item references this adapter" is checkable by anyone. "Nobody is working on it" is a claim about people, which the person it describes then has to correct.
-- **Do not fill in someone's conventions for them** — branch namespace, handle, editor, tooling, settings. State your own and leave theirs open. A placeholder is honest; a guess assigns them a position they never took, and being right about it does not help.
+- **Do not fill in anyone's conventions — including your own** — branch namespace, handle, editor, tooling, settings. Give the shape (`<owner>/<topic>`) and stop. Filling in someone else's assigns them a position they never took, and being right about it does not help. Filling in your own is subtler and just as wrong in a shared document: it gives the document an owner, and casts everyone else as its audience.
 - **Attribute a position to its source and date.** "Moved to `.github/` per review on PR #2" is evidence. "Prefers a lean root" is inference wearing a fact's clothes. The first can be checked and revisited; the second hardens into something nobody remembers deciding.
 - **When a fact about a person is missing, leave it blank and ask.** Blank is accurate. A guess is a decision taken on their behalf, in writing, in their own repository.
 

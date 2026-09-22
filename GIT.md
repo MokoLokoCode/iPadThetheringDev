@@ -1,8 +1,7 @@
 # Pair programming git discipline
 
 `main` is protected: no force-push, changes land only through pull requests.
-Each of us works on a personal branch namespaced to its owner, `<owner>/<topic>`.
-Pick whatever namespace you like for yours; mine is `julian/`.
+Each dev works on a personal branch namespaced to its owner, `<owner>/<topic>`.
 
 ## Daily loop
 
