@@ -54,16 +54,17 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Date: 2026-09-22
 - Context: The project targets more than one camera. An earlier revision of this decision organized camera facts by *rig* (`rigs/<camera>-<ipad>/`), on the assumption of a single target pairing. That is the wrong axis: the README's integration model treats Fujifilm and Sony as parallel **adapters** against one shared application, and the iPad is a property of the developer's bench, not of the adapter.
 - Decision: Follow the layout the README specifies.
-  - Root holds the human-facing `README.md` and a small `AGENTS.md` that routes.
-  - `.github/project/` holds the shared, camera-neutral documents — ARCHITECTURE, DECISIONS, PROGRESS, STATUS, VALIDATION — and they are **not** duplicated per camera.
+  - Root holds the human-facing `README.md`, a small `AGENTS.md` that routes, and `.gitignore`.
+  - `.github/project/` holds the shared, camera-neutral documents about the product — ARCHITECTURE, DECISIONS, PROGRESS, STATUS, VALIDATION — and they are **not** duplicated per camera.
   - `.github/agents/shared/AGENTS.md` holds the rules every adapter follows; `.github/agents/<vendor>/AGENTS.md` holds one vendor's equipment, observed camera behavior, gates (`<X>-GN`), and constraints.
-  - `docs/history/` holds superseded and source material, explicitly not instructions.
+  - `.github/CONTRIBUTING.md` holds process — how contributors work, rather than what is being built. It is deliberately not in `.github/project/`, which is about the product, and not at the root, which the README limits to the three files above. The name is GitHub's: as a recognised community health file it is linked automatically when someone opens a pull request or an issue, which puts the rules in front of a contributor at the moment they would otherwise break them. Previously `git-discipline.md`, then `GIT.md`, both at the root and in neither case listed in the README's layout.
+  - Superseded and source material is not kept in the working tree. It stays in git history, cited by revision where it is relevant.
 - Alternatives:
   - Organize by rig (`rigs/<camera>-<ipad>/`) — the superseded form of this decision. It cannot express a shared application with two adapters, and it puts the iPad in the taxonomy where it does not belong.
   - Duplicate the five shared documents per camera — forbidden by the README, and it is what produced the parallel doc sets this decision cleans up.
   - Everything in the root files — what D-001 produced; it did not survive a second camera.
 - Rationale: The split matches how the code will be split. If a fact would change when the *adapter* changes, it belongs with that adapter; if it holds above the camera transport boundary, it is shared. Keeping the documentation axis identical to the architecture axis means neither can drift from the other unnoticed.
-- Deviations: None. Supersedes the `rigs/<camera>-<ipad>/` form, which never reached `main`.
+- Deviations: None. Supersedes the `rigs/<camera>-<ipad>/` form, which never reached `main`. An earlier revision of this entry also listed a `docs/history/` directory; that material now lives in git history instead.
 
 ## D-005: RAW stays on the card; the app transfers JPEG only
 - Status: Accepted
@@ -113,13 +114,13 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 ## D-010: Shared documents record observations, not inferences about people
 - Status: Accepted
 - Date: 2026-09-22
-- Context: More than one person works in this repository, and its documents are written partly by agents. Two near-misses prompted this. A `.gitignore` comment asserted that a shared `.claude/settings.json` "is the shared half and SHOULD be committed" — a file that has never existed here. And the Fujifilm adapter instructions read "No one is working this adapter", which is a claim about a colleague's activity, written into their own repository, unverifiable by the person making it. `GIT.md` separately invited filling in a second contributor's branch namespace on their behalf.
+- Context: More than one person works in this repository, and its documents are written partly by agents. Two near-misses prompted this. A `.gitignore` comment asserted that a shared `.claude/settings.json` "is the shared half and SHOULD be committed" — a file that has never existed here. And the Fujifilm adapter instructions read "No one is working this adapter", which is a claim about a colleague's activity, written into their own repository, unverifiable by the person making it. The contributing guide (then `GIT.md`) separately invited filling in a second contributor's branch namespace on their behalf.
 - Decision: Shared documents assert what the repository shows. Claims about a person's state, intent, preferences, or conventions are either attributed to a dated source (a review, a message, a commit) or left blank. Blank is a valid, accurate value. The operational form of this rule lives in `.github/agents/shared/AGENTS.md` → *Claims about people*.
 - Alternatives:
   - Rely on ordinary care — rejected; both near-misses were written by someone being careful, and neither produced a failing test.
   - Ban speculation about people entirely — rejected; attributed positions are genuinely useful. "Asked for in review on PR #2" is exactly the kind of fact a decision record should hold.
 - Rationale: It is the existing evidence discipline applied to people instead of hardware. The repository already refuses to call a capability verified without a device run; a claim about a colleague deserves the same sourcing, and has weaker natural defenses — hardware guesses eventually fail loudly, guesses about people just sit there and get built upon.
-- Deviations: None outstanding. Three instances prompted or followed this entry, all corrected. The third is instructive: the rule as first written said "state your own and leave theirs open", and `GIT.md` duly named one contributor's branch namespace as the example. That satisfies the letter of the rule and still gives a co-owned document an owner. The rule now covers filling in your own conventions too, and `GIT.md` gives the shape with no example.
+- Deviations: None outstanding. Three instances prompted or followed this entry, all corrected. The third is instructive: the rule as first written said "state your own and leave theirs open", and the contributing guide duly named one contributor's branch namespace as the example. That satisfies the letter of the rule and still gives a co-owned document an owner. The rule now covers filling in your own conventions too, and the guide gives the shape with no example.
 
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,

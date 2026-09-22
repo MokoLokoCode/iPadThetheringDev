@@ -15,7 +15,7 @@ are in the sibling vendor directories and add to these; they never relax them.
 
 ## Engineering rules
 
-- Work only on items listed in PROGRESS.md; reference the `W-NNN` ID in commits — see [GIT.md](../../../GIT.md) for the branch and pull-request rules, and pull main before starting work rather than discovering the divergence at push time.
+- Work only on items listed in PROGRESS.md; reference the `W-NNN` ID in commits — see [CONTRIBUTING.md](../../CONTRIBUTING.md) for the branch and pull-request rules, and pull main before starting work rather than discovering the divergence at push time.
 - Any design choice not already in DECISIONS.md gets a new `D-NNN` entry before code lands.
 - Never delete or renumber IDs in DECISIONS.md or PROGRESS.md. Supersede instead.
 - Update STATUS.md at the end of every working session: what works, what is unverified, next action.
@@ -37,7 +37,7 @@ are in the sibling vendor directories and add to these; they never relax them.
 - Apply the evidence discipline above to people as well as hardware: assert what the repository shows, not what a person thinks, wants, or is doing.
 - State the observable fact. "No open work item references this adapter" is checkable; "nobody is working on it" is not.
 - Give the shape of a convention and stop — branch namespace, handle, editor, tooling, settings. Do not fill in anyone's, including your own.
-- Attribute a position to a dated source: a review, a message, or a commit.
+- Attribute a position to a dated source: a review, a message, or a commit before inferring intent. 
 - Leave a missing fact about a person blank and ask. Blank is a valid value.
 
 ## Safety boundaries
