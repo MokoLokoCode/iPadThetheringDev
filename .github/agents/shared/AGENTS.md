@@ -34,17 +34,11 @@ are in the sibling vendor directories and add to these; they never relax them.
 
 ## Claims about people
 
-The evidence discipline above applies to people as well as hardware. These documents
-can assert what the repository shows. They cannot assert what a person thinks, wants,
-or is doing.
-
-- **Write the observable, not the inference.** "No open work item references this adapter" is checkable by anyone. "Nobody is working on it" is a claim about people, which the person it describes then has to correct.
-- **Do not fill in anyone's conventions — including your own** — branch namespace, handle, editor, tooling, settings. Give the shape (`<owner>/<topic>`) and stop. Filling in someone else's assigns them a position they never took, and being right about it does not help. Filling in your own is subtler and just as wrong in a shared document: it gives the document an owner, and casts everyone else as its audience.
-- **Attribute a position to its source and date.** "Moved to `.github/` per review on PR #2" is evidence. "Prefers a lean root" is inference wearing a fact's clothes. The first can be checked and revisited; the second hardens into something nobody remembers deciding.
-- **When a fact about a person is missing, leave it blank and ask.** Blank is accurate. A guess is a decision taken on their behalf, in writing, in their own repository.
-
-This is not politeness. A guess about a person becomes load-bearing the moment
-somebody builds on it — and unlike a wrong guess about hardware, no test fails.
+- Apply the evidence discipline above to people as well as hardware: assert what the repository shows, not what a person thinks, wants, or is doing.
+- State the observable fact. "No open work item references this adapter" is checkable; "nobody is working on it" is not.
+- Give the shape of a convention and stop — branch namespace, handle, editor, tooling, settings. Do not fill in anyone's, including your own.
+- Attribute a position to a dated source: a review, a message, or a commit.
+- Leave a missing fact about a person blank and ask. Blank is a valid value.
 
 ## Safety boundaries
 
