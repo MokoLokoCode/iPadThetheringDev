@@ -16,9 +16,6 @@ hardware-verified.
 | Bench iPad | iPad Air (4th gen), USB-C | iPadOS version never supplied. Note this is **not** the iPad used for Sony work, which is Lightning |
 | Cable | Direct data-capable USB-C | Model, length, and speed unrecorded |
 
-The USB-C iPad means no Camera Adapter is needed — the camera connects directly. That
-is a material difference from the Sony bench and changes what the first probe tests.
-
 ## Camera USB modes
 
 From Fujifilm's documentation, not from observation here.
@@ -43,25 +40,27 @@ evidence that the card keeps the file. Verify after tethered captures (D-005).
 `DSCF####.RAF` / `DSCF####.JPG`. Never label an inferred `.RAF` as an observed RAW
 file (D-008).
 
-## Gates
-
-| Gate | Question | State |
-| --- | --- | --- |
-| F-G0 | Does the cable pass data, and does the camera enumerate on the iPad in `USB CARD READER`? | Not started |
-| F-G1 | Does discovery, `requestOpenSession`, and catalog enumeration succeed? | Not started |
-| F-G2 | In `USB TETHER SHOOTING AUTO`, does a physical shutter press produce an accessible new object or PTP event? | Not started |
-| F-G3 | Is RAW retained on the card, with names matching what the iPad received? | Not started |
-
 ## Resuming this adapter
 
-The original X-T4 design package and the conversation it came from are in git history,
-not in the working tree:
+This file records X-T4 equipment and camera behavior. It deliberately defines **no
+gates and no work sequence** for this adapter — the original package already has both,
+and whoever resumes the workstream should decide whether to keep them rather than
+inherit a structure written by someone not running it.
+
+That package and the conversation it came from are in git history:
 
 ```bash
-git show 98353d0 --stat          # the seven-file package as committed
-git show a0e4320 --stat          # the design conversation transcript
+git show 98353d0:.github/VALIDATION.md   # V-00..V-09, including the X-T4 gates G1/G2/G3
+git show 98353d0:.github/PROGRESS.md     # P-010..P-100 and their acceptance criteria
+git show 98353d0:.github/README.md       # equipment and product context as first stated
+git show a0e4320:.github/sonya7riii/ipad-tethering-transcript.md   # the design conversation
 ```
 
-Its camera-neutral content is already in `.github/project/` — do not copy it back.
-Take only X-T4 facts from it, and re-verify them against current Fujifilm
-documentation before relying on any.
+V-01, V-02, and V-03 in that VALIDATION are the X-T4 hardware procedures in full —
+observation windows, exposure spacing, busy-indicator behavior, RAW/JPEG object counts,
+card inspection afterwards. They were not carried into `.github/project/VALIDATION.md`,
+which holds the camera-neutral procedures only.
+
+Its camera-neutral content is already in `.github/project/` — do not copy it back. Take
+only X-T4 facts from it, and re-verify them against current Fujifilm documentation
+before relying on any.
