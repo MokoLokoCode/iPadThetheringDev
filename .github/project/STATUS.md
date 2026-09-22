@@ -9,7 +9,7 @@ equipment and gate results live in [.github/agents/](../agents/) — currently
 ## What actually works
 
 - Nothing in software — there is still **no Xcode project and no code**, for either adapter.
-- Fujifilm (X-T4): design material only, none of it hardware-verified. Dormant — see [.github/agents/fujifilm/AGENTS.md](../agents/fujifilm/AGENTS.md).
+- Fujifilm (X-T4): design material only, none of it hardware-verified, and no open work item references it — see [.github/agents/fujifilm/AGENTS.md](../agents/fujifilm/AGENTS.md).
 - Hardware: rig gate **S-G0 passed** 2026-09-20 — the cable carries data and the camera's USB modes have been surveyed. Observations are in the [Sony adapter instructions](../agents/sony/AGENTS.md); the consequence for the design is D-002.
 - Documentation: scope, target rig, transport (D-002), storage (D-003), docs layout (D-004), and the product decisions harvested from the X-T4 package (D-005…D-009) are settled. W-001, W-002, and W-003 are Done with evidence. The backlog now runs to V1 acceptance (W-017) with procedures V-001…V-012 behind it.
 

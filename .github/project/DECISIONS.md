@@ -110,6 +110,17 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Rationale: On an A12 iPad over a USB 2.0 adapter link, the transport is the likely bottleneck and parallelism mostly buys memory pressure. Concurrency can increase later, but only with a repeatable measured improvement.
 - Deviations: None yet. Numeric targets (preview latency `N`, cache size, queue depth) are deliberately unset until the V-012 baseline exists — do not fabricate them.
 
+## D-010: Shared documents record observations, not inferences about people
+- Status: Accepted
+- Date: 2026-09-22
+- Context: More than one person works in this repository, and its documents are written partly by agents. Two near-misses prompted this. A `.gitignore` comment asserted that a shared `.claude/settings.json` "is the shared half and SHOULD be committed" — a file that has never existed here. And the Fujifilm adapter instructions read "No one is working this adapter", which is a claim about a colleague's activity, written into their own repository, unverifiable by the person making it. `GIT.md` separately invited filling in a second contributor's branch namespace on their behalf.
+- Decision: Shared documents assert what the repository shows. Claims about a person's state, intent, preferences, or conventions are either attributed to a dated source (a review, a message, a commit) or left blank. Blank is a valid, accurate value. The operational form of this rule lives in `.github/agents/shared/AGENTS.md` → *Claims about people*.
+- Alternatives:
+  - Rely on ordinary care — rejected; both near-misses were written by someone being careful, and neither produced a failing test.
+  - Ban speculation about people entirely — rejected; attributed positions are genuinely useful. "Asked for in review on PR #2" is exactly the kind of fact a decision record should hold.
+- Rationale: It is the existing evidence discipline applied to people instead of hardware. The repository already refuses to call a capability verified without a device run; a claim about a colleague deserves the same sourcing, and has weaker natural defenses — hardware guesses eventually fail loudly, guesses about people just sit there and get built upon.
+- Deviations: None. The two instances that prompted this were corrected in the same commit as this entry.
+
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,
      see W-013), and numeric performance targets once V-012 has a baseline. -->

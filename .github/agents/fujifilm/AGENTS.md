@@ -2,9 +2,11 @@
 
 Adds to [../shared/AGENTS.md](../shared/AGENTS.md).
 
-**Status: dormant.** No one is working this adapter. It was the project's original and
-first-named target, and the README still treats it as such; it is recorded here so the
-workstream can be resumed without re-deriving it. Nothing below is hardware-verified.
+**Status: no active work recorded.** No code exists for this adapter, no hardware run
+has been logged against it, and no open work item references it. It was the project's
+original and first-named target, and the README still treats it as such; it is recorded
+here so the workstream can be resumed without re-deriving it. Nothing below is
+hardware-verified.
 
 ## Equipment
 

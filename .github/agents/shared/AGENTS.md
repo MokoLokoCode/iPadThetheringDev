@@ -32,6 +32,20 @@ are in the sibling vendor directories and add to these; they never relax them.
 - Advertised camera capabilities are clues, not proof of physical-shutter access or safe storage behavior.
 - Every `W-NNN` marked Done cites evidence: a VALIDATION.md procedure ID with its observed result, or test output. Hardware-dependent items are not Done until run on the real device.
 
+## Claims about people
+
+The evidence discipline above applies to people as well as hardware. These documents
+can assert what the repository shows. They cannot assert what a person thinks, wants,
+or is doing.
+
+- **Write the observable, not the inference.** "No open work item references this adapter" is checkable by anyone. "Nobody is working on it" is a claim about people, which the person it describes then has to correct.
+- **Do not fill in someone's conventions for them** — branch namespace, handle, editor, tooling, settings. State your own and leave theirs open. A placeholder is honest; a guess assigns them a position they never took, and being right about it does not help.
+- **Attribute a position to its source and date.** "Moved to `.github/` per review on PR #2" is evidence. "Prefers a lean root" is inference wearing a fact's clothes. The first can be checked and revisited; the second hardens into something nobody remembers deciding.
+- **When a fact about a person is missing, leave it blank and ask.** Blank is accurate. A guess is a decision taken on their behalf, in writing, in their own repository.
+
+This is not politeness. A guess about a person becomes load-bearing the moment
+somebody builds on it — and unlike a wrong guess about hardware, no test fails.
+
 ## Safety boundaries
 
 - Never call deletion APIs, enable delete-after-download, format a card, or send reset/format/firmware commands. Do not change capture destinations from software.
