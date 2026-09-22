@@ -8,7 +8,7 @@ This file is intentionally small. It routes; it does not hold rules.
    - [.github/agents/sony/AGENTS.md](.github/agents/sony/AGENTS.md) — Sony a7R III
    - [.github/agents/fujifilm/AGENTS.md](.github/agents/fujifilm/AGENTS.md) — Fujifilm X-T4
 4. Shared, camera-neutral documents are authoritative under [.github/project/](.github/project/): ARCHITECTURE, DECISIONS, PROGRESS, STATUS, VALIDATION.
-5. Read [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) before your first commit — branch, rebase, and pull-request rules. `main` is protected and more than one person works here, so **pull main and rebase before starting**, not after.
+5. Read @.github/CONTRIBUTING.md before your first commit — branch, rebase, and pull-request rules. `main` is protected and more than one person works here, so pull main and rebase before starting, not after.
 
 It lives at the root because agent discovery from nested `.github` directories is
 tool-dependent.
