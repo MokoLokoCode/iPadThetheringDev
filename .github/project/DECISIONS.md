@@ -133,7 +133,9 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
   - Automatic installation from a script or a session hook — rejected. A repository that silently reconfigures a contributor's git is worse than one that asks.
   - Enforce the same checks in a hook and in CI — rejected for now; duplicated enforcement drifts, and a slow pre-commit hook trains people to pass `--no-verify` habitually.
 - Rationale: The pattern is taken from the `agentic-engineering-platform` repository, where the installed pre-commit hook is four lines and the three-hundred-line layout validator runs in CI instead. That split is the useful part: a local guard has to be cheap enough that nobody wants to skip it, and anything expensive or mandatory has to run somewhere a contributor cannot bypass.
-- Deviations: None. Only one hook exists (protect-main), and there is no CI yet — so at present nothing is actually enforced for everyone, only reminded. Branch protection on `main` would be the smallest real enforcement and is not set up.
+- Deviations: None outstanding, but two limits are inherent rather than incidental.
+  - `core.hooksPath` resolves against the working tree, so a committed hook only exists on branches that contain it. Verified in a clean clone with the config active: standing on `main` before this hook merged, a commit to `main` succeeded, because the file was not there to run. Any branch cut before a hook lands is unguarded by it, and so is `main` until the hook merges.
+  - Only one hook exists (protect-main), and there is no CI. At present nothing is enforced for anyone — it is a reminder. Branch protection on `main` is the smallest real enforcement, is a repository setting rather than a file, and is not set up. Both facts push the same way: treat hooks as ergonomics, never as the thing standing between `main` and a mistake.
 
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,
