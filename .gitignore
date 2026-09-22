@@ -1,11 +1,6 @@
 # macOS
 .DS_Store
 
-# Claude Code — personal, machine-local settings.
-# Narrow on purpose, not a blanket .claude/ : if a shared
-# .claude/settings.json is ever added, it is meant to be committed.
-.claude/settings.local.json
-
 # Xcode — per-user state and build products.
 # CameraTether.xcodeproj itself is committed; only the user-specific
 # and generated parts are ignored.
@@ -21,6 +16,9 @@ build/
 # pins the exact dependency versions everyone builds against.
 .build/
 .swiftpm/xcode/package.xcworkspace/xcuserdata/
+
+# Claude Code — personal, machine-local settings.
+.claude/settings.local.json
 
 # Instruments traces — large, and specific to one run on one machine.
 *.trace
