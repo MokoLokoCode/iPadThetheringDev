@@ -15,7 +15,7 @@ are in the sibling vendor directories and add to these; they never relax them.
 
 ## Engineering rules
 
-- Work only on items listed in PROGRESS.md; reference the `W-NNN` ID in commits.
+- Work only on items listed in PROGRESS.md; reference the `W-NNN` ID in commits — see [GIT.md](../../../GIT.md) for the branch and pull-request rules, and pull main before starting work rather than discovering the divergence at push time.
 - Any design choice not already in DECISIONS.md gets a new `D-NNN` entry before code lands.
 - Never delete or renumber IDs in DECISIONS.md or PROGRESS.md. Supersede instead.
 - Update STATUS.md at the end of every working session: what works, what is unverified, next action.
