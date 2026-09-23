@@ -1,0 +1,38 @@
+#!/bin/sh
+# Refuse ordinary commits while main is checked out.
+#
+# main is the integration base and changes reach it through pull requests
+# (.github/CONTRIBUTING.md). This makes that local rather than aspirational.
+#
+# Opt in per clone:   git config core.hooksPath .github/hooks
+# Authorized bypass:  ALLOW_MAIN_COMMIT=1 git commit ...
+
+set -eu
+
+if [ "${ALLOW_MAIN_COMMIT:-}" = "1" ]; then
+    exit 0
+fi
+
+# Quiet failure modes: detached HEAD returns 1 and is not main, so allow it.
+branch=$(git symbolic-ref --quiet --short HEAD) || exit 0
+
+if [ "$branch" != "main" ]; then
+    exit 0
+fi
+
+cat >&2 <<'MESSAGE'
+Commit blocked: main is the integration base, not a working branch.
+
+Move this work to a personal branch and commit there:
+
+    git switch -c <owner>/<topic>
+    git commit ...
+
+If the commit already exists somewhere you want it, nothing has been lost —
+your changes are still staged.
+
+For an explicitly authorized exception:
+
+    ALLOW_MAIN_COMMIT=1 git commit ...
+MESSAGE
+exit 1

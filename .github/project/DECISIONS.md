@@ -123,6 +123,21 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Rationale: It is the existing evidence discipline applied to people instead of hardware. The repository already refuses to call a capability verified without a device run; a claim about a colleague deserves the same sourcing, and has weaker natural defenses — hardware guesses eventually fail loudly, guesses about people just sit there and get built upon.
 - Deviations: None outstanding. Three instances prompted or followed this entry, all corrected. The third is instructive: the rule as first written said "state your own and leave theirs open", and the contributing guide duly named one contributor's branch namespace as the example. That satisfies the letter of the rule and still gives a co-owned document an owner. The rule now covers filling in your own conventions too, and the guide gives the shape with no example.
 
+## D-011: Local hooks are opt-in reminders; enforcement belongs in CI
+- Status: Accepted
+- Date: 2026-09-22
+- Context: `.github/CONTRIBUTING.md` says `main` is protected and reached only through pull requests. Nothing made that true locally. One contributor works largely through agents and wanted repo-embedded guards; the risk is that guards written for one person's workflow become obligations on the other's hand-written commits.
+- Decision: Committed hooks live in `.github/hooks/` and are activated per clone with `git config core.hooksPath .github/hooks`. They stay small and fast, and they are reminders rather than authorities — `--no-verify` and a documented environment variable both bypass them. Any rule that must hold for everyone goes in GitHub branch protection or CI, never in a local hook.
+- Alternatives:
+  - `.githooks/` at the root — the conventional path, rejected because it would be a fourth root entry against the README's layout. `core.hooksPath` accepts any path, and `.github/` is where the README puts detail.
+  - Automatic installation from a script or a session hook — rejected. A repository that silently reconfigures a contributor's git is worse than one that asks.
+  - Enforce the same checks in a hook and in CI — rejected for now; duplicated enforcement drifts, and a slow pre-commit hook trains people to pass `--no-verify` habitually.
+- Rationale: The pattern is taken from the `agentic-engineering-platform` repository, where the installed pre-commit hook is four lines and the three-hundred-line layout validator runs in CI instead. That split is the useful part: a local guard has to be cheap enough that nobody wants to skip it, and anything expensive or mandatory has to run somewhere a contributor cannot bypass.
+- Deviations: None outstanding, but two limits are inherent rather than incidental.
+  - `core.hooksPath` resolves against the working tree, so a committed hook only exists on branches that contain it. Verified in a clean clone with the config active: standing on `main` before this hook merged, a commit to `main` succeeded, because the file was not there to run. Any branch cut before a hook lands is unguarded by it, and so is `main` until the hook merges.
+  - Only one hook exists (protect-main), and there is no CI. Server-side enforcement does exist and predates this entry: the repository ruleset **Protect Main** has been active since 2026-09-20, targeting `refs/heads/main` with no bypass actors, and blocks deletion and non-fast-forward pushes while requiring a pull request with one approving review, stale-review dismissal on push, and resolved review threads. An earlier revision of this entry stated that no branch protection was set up; that was asserted without checking and was wrong.
+  - What the ruleset governs is the remote. It cannot stop a local commit on `main`, only the push. That is the hook's actual and narrower job: fail at commit time rather than at push time, so the work is never on the wrong branch in the first place. Treat hooks as ergonomics; the ruleset is what stands between `main` and a mistake.
+
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,
      see W-013), and numeric performance targets once V-012 has a baseline. -->
