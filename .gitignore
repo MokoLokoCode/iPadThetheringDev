@@ -22,3 +22,13 @@ build/
 
 # Instruments traces — large, and specific to one run on one machine.
 *.trace
+# Local Xcode state and build output; keep the project and shared schemes.
+.DS_Store
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.xcarchive/
+*.ipa
+*.dSYM/
+*.dSYM.zip
