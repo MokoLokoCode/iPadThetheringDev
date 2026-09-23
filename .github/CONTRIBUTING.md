@@ -1,7 +1,7 @@
 # Pair programming git discipline
 
 `main` is protected: no force-push, changes land only through pull requests.
-Each of us works on a personal branch (`julian/*`, `<pair>/*`).
+Each dev works on a personal branch namespaced to its owner, `<owner>/<topic>`.
 
 ## Daily loop
 
@@ -11,7 +11,7 @@ Each of us works on a personal branch (`julian/*`, `<pair>/*`).
    ```
 2. Rebase personal branch onto main
    ```
-   git checkout julian/dev && git rebase main
+   git checkout <your-branch> && git rebase main
    ```
 3. Force-push the personal branch (never main) with lease, so our independent
    changes always sit on top of the latest main and each of our individual

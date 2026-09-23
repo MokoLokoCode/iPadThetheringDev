@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Xcode — per-user state and build products.
+# CameraTether.xcodeproj itself is committed; only the user-specific
+# and generated parts are ignored.
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+DerivedData/
+build/
+
+# Swift Package Manager.
+# Package.resolved is deliberately NOT ignored — for an application it
+# pins the exact dependency versions everyone builds against.
+.build/
+.swiftpm/xcode/package.xcworkspace/xcuserdata/
+
+# Personal, machine-local settings. A tool's shared config is committed; the .local half is not.
+.claude/settings.local.json
+
+# Instruments traces — large, and specific to one run on one machine.
+*.trace
