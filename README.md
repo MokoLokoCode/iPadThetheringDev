@@ -6,7 +6,7 @@ Documentation baseline: 2026-09-04. Working project name: **CameraTether**.
 
 Build a native iPadOS app that turns an iPad into a portable review monitor for photographs taken with the physical shutter of a supported camera connected over USB-C. The first hardware target is the **Fujifilm X-T4**, with Sony support developed through a separate adapter against the same shared application. The app is a capture-preview-review-selection companion, not a Lightroom replacement.
 
-**Current reality:** this package contains design documents, not a working application. Earlier conversation proposed a diagnostic Swift implementation, but no successful build, physical-device test, or PTP trace has been reported. Device discovery, new-capture access in tether mode, and card retention must be verified. Do not treat the earlier code as an SDK-validated starter project.
+**Current reality:** the repository now includes a minimal `CameraTether.xcodeproj` and SwiftUI setup screen. Follow [Run the first build](.github/DEVELOPMENT.md) to check out the bootstrap branch, configure signing, and launch it on your Mac/iPad. The scaffold has not been compiled with Xcode or run on a device yet. Camera discovery, new-capture access in tether mode, and card retention remain unimplemented and unverified. Do not treat earlier conversation snippets as an SDK-validated camera implementation.
 
 ## Development toolchain
 
@@ -20,7 +20,7 @@ The application is an Apple-platform project, so **Xcode and the Apple SDK are r
 
 A supported workflow is to edit in VS Code and open Xcode only for project settings, signing, simulator/device work, visual debugging, and profiling. VS Code does not replace Xcode's installed toolchain or signing/deployment workflow. Keep `CameraTether.xcodeproj` as the application build source of truth; do not create a competing build definition for the app target.
 
-Before the first implementation commit, record these outputs and the device/camera versions in STATUS:
+Before camera integration, record these outputs and the device/camera versions in STATUS. The launch scaffold was authored without the Apple toolchain; its build and installation are still pending (D-012 in the current decision register):
 
 ```bash
 xcodebuild -version
@@ -30,6 +30,8 @@ xcrun swift --version
 Use the current stable Xcode compatible with the development Mac and iPad. A free Apple developer account is sufficient for testing on an owned device; distribution and TestFlight have separate membership requirements.
 
 ## Creating the Xcode project
+
+The initial project is now checked in; **open `CameraTether.xcodeproj` rather than creating another project**. The settings below describe the intended baseline for future reference. This launch-only increment defers the test target until there is testable application behavior; its Swift 6 / iPadOS 17 settings and validation limits are recorded in the [setup instructions](.github/DEVELOPMENT.md).
 
 Create **iOS → App**, not a Multiplatform or document-based template.
 
@@ -108,6 +110,20 @@ Make Xcode groups mirror real directories. Avoid catch-all folders such as `Help
 ## Camera integration model
 
 The Fujifilm and Sony adapters are parallel camera-integration workstreams against one shared application. A model is supported only after its exact hardware/firmware path passes the required validation; parallel development does not imply equal readiness or compatibility.
+
+### Workstream ownership
+
+Per the owner's instruction on 2026-09-23:
+
+| Workstream | Lead | Scope |
+| --- | --- | --- |
+| Fujifilm X-T4 | Mario | Fujifilm adapter, USB-C iPad Air 4 tests, and X-T4 compatibility evidence |
+| Sony a7R III | Mario's colleague; name not supplied | Sony adapter and its separate hardware validation |
+| Shared application | Both contributors | App target, transport contract, diagnostic UI, storage, previews, review, and selections |
+
+Fujifilm work is tracked in [its adapter instructions](.github/agents/fujifilm/AGENTS.md) and W-019–W-024 in the [shared backlog](.github/project/PROGRESS.md). Sony keeps its existing work items and gates. Each adapter can advance independently once its own prerequisites pass; neither adapter's success proves compatibility for the other.
+
+Use the same `CameraTether.xcodeproj` for both. Shared files and project/target settings need explicit review by the other contributor when they affect both workstreams. Keep vendor logic under `Camera/Adapters/Fujifilm/` or `Camera/Adapters/Sony/`; do not create a second app or copy shared features into an adapter.
 
 ```mermaid
 flowchart LR
