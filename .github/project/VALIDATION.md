@@ -13,11 +13,19 @@ Procedures have stable IDs (`V-NNN`). PROGRESS.md evidence cites these.
 
 ## Safety checks (run before every session)
 
-- [ ] Camera card contains no irreplaceable images (tests may write/delete).
+- [ ] Use expendable captures on a backed-up/test card. Normal test exposures write files; tests must not delete or format camera media.
 - [ ] iPad session directory is empty or backed up.
 - [ ] Cable is undamaged; connectors seat fully.
-- [ ] Camera `MENU → Setup → USB Connection` is set explicitly (never `Auto`).
-- [ ] Before any shoot that matters: `Still Img. Save Dest. = PC+Camera`. It defaults to **PC Only**, which means captures are *not* written to the card.
+- [ ] Select the connection mode specified by that adapter's procedure. Sony uses explicit `PC Remote`; Fujifilm uses `USB CARD READER` for the control and then `USB TETHER SHOOTING AUTO`. Sony's ban on its automatic USB mode does not prohibit Fujifilm's named AUTO tether mode.
+- [ ] Pass the relevant adapter's RAW-retention gate before any real shoot. Sony uses S-G4 / V-007 and its `Still Img. Save Dest.` setting; Fujifilm uses F-G2 card inspection. Do not apply Sony setting names to the X-T4 or change destinations from the app.
+
+## Procedure scope
+
+V-006 and V-007 are Sony-specific. Fujifilm's setup, card-reader control, AUTO
+physical-shutter test and RAW inspection are defined in
+[F-G0–F-G3](../agents/fujifilm/AGENTS.md#gates-and-work-sequence).
+Use the applicable shared validation procedures for common features after that
+adapter's prerequisites pass. A Sony result cannot clear an F-GN gate, or vice versa.
 
 ## Procedures
 
@@ -71,7 +79,8 @@ Safety gate. Must pass before the app is used on anything irreplaceable. Covers 
 
 ### V-008: Disconnect, access, and lifecycle recovery
 Fault simulation first; physical idle/reconnect tests only afterward, and only on
-expendable captures once V-007 has passed. Covers W-014.
+expendable captures once the relevant RAW-safety gate has passed (Sony V-007/S-G4;
+Fujifilm F-G2). Covers W-014.
 
 | Case | Expected result |
 | --- | --- |
@@ -114,7 +123,7 @@ Storage unit tests plus an end-to-end owner check. Covers W-013, W-016.
 2. Navigate, ingest another capture, disconnect/reconnect, and relaunch. Selections and local previews must survive all four.
 3. Simulate process interruption around asset and manifest writes; recover, or surface a repairable state — never silently lose a selected capture.
 4. Export zero selections, then a normal set. Confirm deterministic order and exact observed filenames.
-5. Test observed RAW pairs, inferred candidates, unresolved pairs, duplicate basenames, and mixed-case extensions. No inferred `.ARW` is presented as observed; ambiguities are warned about.
+5. Test observed RAW pairs, inferred candidates, unresolved pairs, duplicate basenames, and mixed-case extensions. No inferred RAW filename (`.ARW`, `.RAF`, or otherwise) is presented as observed; ambiguities are warned about.
 6. Compare an exported sample against the actual card contents and a manual Lightroom lookup. This validates the handoff, not catalog integration.
 
 **Pass:** durable selections, honest and stable exports, no silent deduplication of distinct selected captures, reported persistence failures.
@@ -138,18 +147,25 @@ observation; app-only timings must not be called shutter latency.
 
 PROGRESS.md cites these. One record per run; keep failed runs.
 
+### DOC-20260923-FUJI — Workstream activation
+
+- Work: W-019; decision D-013; documentation only, not a hardware run.
+- Source: owner's 2026-09-23 instruction assigning himself Fujifilm and his colleague Sony. No colleague identity or tooling preference inferred.
+- Changes: ownership recorded; Fujifilm W-020–W-024 and F-G0–F-G3 defined; shared prerequisites scoped per bench; shared safety instructions distinguish Sony settings from Fujifilm modes.
+- Validation: `git diff --check` passed; all 21 relative link targets in the eight changed Markdown files resolved; W-NNN table rows are unique and W-019–W-024 are present. No Swift files or Xcode settings changed; no compilation, simulator run, or hardware test performed.
+- Outcome: documents prepared for review. Every Fujifilm hardware gate remains pending.
+
 ### RUN-YYYYMMDD-NN — template
 
 | Field | Value |
 | --- | --- |
-| Procedure | V-NNN (and rig gate, if any) |
+| Procedure | Applicable V-NNN or F-GN; work item W-NNN |
 | Date / operator | |
 | Adapter | e.g. `sony` / `fujifilm` |
-| Camera mode | `USB Connection` setting and `Still Img. Save Dest.` |
+| Camera mode | Exact vendor mode and applicable capture/card settings; do not substitute another vendor's names |
 | Build / commit | |
 | Environment | iPadOS, Xcode, camera firmware |
 | Result | Pass / Fail / Partial |
 | Observations | What was actually seen, including timings |
 | Deviations from procedure | |
 | Follow-up | Work item or decision raised |
-

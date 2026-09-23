@@ -22,6 +22,9 @@ are in the sibling vendor directories and add to these; they never relax them.
 - Keep ARCHITECTURE.md truthful — if the code deviates, update the doc or record a Deviation in the decision.
 - No new third-party dependencies without a decision entry.
 - Do not duplicate the shared documents per camera. If a camera needs something the shared contract lacks, extend the contract — with evidence.
+- Ownership was supplied by the owner on 2026-09-23: Mario leads Fujifilm; his colleague leads Sony (name not supplied). Treat workstream ownership as coordination, not proof of completed work. Do not assign the colleague a name, branch namespace, or editor preference.
+- Changes to shared contracts, UI, persistence, or Xcode project settings serve both adapters. Identify that shared impact in the PR and request review by the other contributor through the normal review process. Do not overwrite the other adapter or duplicate shared components to avoid coordination.
+- Scope dependencies and hardware gates per adapter. Sony's Lightning adapter, desktop baseline, and vendor handshake are not Fujifilm prerequisites. A shared feature may be developed using either verified adapter, while support claims remain separate.
 
 ## Evidence discipline
 

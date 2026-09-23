@@ -18,6 +18,20 @@ this document details what sits above that boundary. Vendor specifics belong in
 
 <!-- TODO: fill in concrete types/modules once the first spike lands. -->
 
+## Parallel adapter work
+
+One `CameraTether` app, transport contract, diagnostic/review UI, session store,
+preview pipeline, and export implementation serve both adapters. Mario leads
+Fujifilm; his colleague leads Sony (owner's instruction, 2026-09-23; D-013).
+Keep vendor implementation under `Camera/Adapters/Fujifilm/` or
+`Camera/Adapters/Sony/`. This describes intended source placement, not existing
+adapter classes or verified compatibility.
+
+The shared bootstrap is proposed separately in PR #6. After a bench validates its
+launch and SDK baseline, that vendor's observational probe can proceed independently.
+Hardware gates remain separate. Review shared contracts and project-file edits
+across workstreams; do not create a second application or duplicate shared modules.
+
 ## First build: the diagnostic probe
 
 The first build observes; it does not act. No download, no shutter command, no setting
@@ -94,7 +108,7 @@ sequenceDiagram
     participant P as Preview pipeline
     participant UI
 
-    Note over T,Cam: session open + vendor handshake (D-002)<br/>before any of this flows
+    Note over T,Cam: Session ready; Sony additionally needs D-002 handshake
     Cam->>T: new object event
     T->>I: capture bytes (streamed)
     I->>S: write file (atomic rename on completion)

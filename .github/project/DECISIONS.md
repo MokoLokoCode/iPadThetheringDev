@@ -123,6 +123,15 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Rationale: It is the existing evidence discipline applied to people instead of hardware. The repository already refuses to call a capability verified without a device run; a claim about a colleague deserves the same sourcing, and has weaker natural defenses — hardware guesses eventually fail loudly, guesses about people just sit there and get built upon.
 - Deviations: None outstanding. Three instances prompted or followed this entry, all corrected. The third is instructive: the rule as first written said "state your own and leave theirs open", and the contributing guide duly named one contributor's branch namespace as the example. That satisfies the letter of the rule and still gives a co-owned document an owner. The rule now covers filling in your own conventions too, and the guide gives the shape with no example.
 
+## D-013: Activate independent Fujifilm and Sony workstreams in the shared application
+- Status: Accepted workstream assignment; camera compatibility remains unverified
+- Date: 2026-09-23
+- Context: The owner stated that he will focus on Fujifilm and his colleague on Sony, and asked to add Fujifilm work. The layout branch had no active Fujifilm items or gates; parts of the shared backlog incorrectly made Sony bench prerequisites apply to all work.
+- Decision: Mario leads the X-T4 adapter; his colleague leads Sony, with the colleague's name left unspecified. W-020–W-024 and F-G0–F-G3 define the X-T4 sequence: environment/launch/SDK baseline, observational probe, card-reader control, AUTO capture plus RAW retention, then first JPEG preview. W-019 records this documentation activation. Shared code is implemented once and reviewed for impact on both adapters; each vendor supplies independent compatibility evidence.
+- Alternatives: Separate apps or copied shared features contradict the accepted integration model. Waiting for Sony hardware/handshake before Fujifilm development imposes an unrelated dependency. Implementing camera code before the owner's launch and SDK baseline skips the agreed first checkpoint.
+- Rationale: Allows parallel work without confusing ownership with implemented capability, or one bench's prerequisites with the other's. The public API first approach remains the Fujifilm baseline; D-002 authorizes only the Sony workstream's vendor handshake.
+- Deviations: None in code; this is a documentation-only change. No adapter or hardware gate is complete. PR #6 supplies the shared launch scaffold separately. D-011/D-012 are left available for the decisions already proposed in pending PR #5 and the bootstrap record, avoiding concurrent reuse.
+
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,
      see W-013), and numeric performance targets once V-012 has a baseline. -->

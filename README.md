@@ -109,6 +109,20 @@ Make Xcode groups mirror real directories. Avoid catch-all folders such as `Help
 
 The Fujifilm and Sony adapters are parallel camera-integration workstreams against one shared application. A model is supported only after its exact hardware/firmware path passes the required validation; parallel development does not imply equal readiness or compatibility.
 
+### Workstream ownership
+
+Per the owner's instruction on 2026-09-23:
+
+| Workstream | Lead | Scope |
+| --- | --- | --- |
+| Fujifilm X-T4 | Mario | Fujifilm adapter, USB-C iPad Air 4 tests, and X-T4 compatibility evidence |
+| Sony a7R III | Mario's colleague; name not supplied | Sony adapter and its separate hardware validation |
+| Shared application | Both contributors | App target, transport contract, diagnostic UI, storage, previews, review, and selections |
+
+Fujifilm work is tracked in [its adapter instructions](.github/agents/fujifilm/AGENTS.md) and W-019–W-024 in the [shared backlog](.github/project/PROGRESS.md). Sony keeps its existing work items and gates. Each adapter can advance independently once its own prerequisites pass; neither adapter's success proves compatibility for the other.
+
+Use the same `CameraTether.xcodeproj` for both. Shared files and project/target settings need explicit review by the other contributor when they affect both workstreams. Keep vendor logic under `Camera/Adapters/Fujifilm/` or `Camera/Adapters/Sony/`; do not create a second app or copy shared features into an adapter.
+
 ```mermaid
 flowchart LR
     UI["Review UI"] --> Coordinator["Capture coordinator"]
