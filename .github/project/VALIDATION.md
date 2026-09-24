@@ -77,6 +77,17 @@ Safety gate. Must pass before the app is used on anything irreplaceable. Covers 
 3. **Expected:** 3 `DSC#####.ARW` files present, and their numbers match the `DSC#####.JPG` names the iPad received.
 4. **Failure interpretation:** card empty → save destination reverted or the app changed it; ARW present but numbering unmatched → pairing logic cannot rely on basename; missing subset → transfer is racing the card write.
 
+### V-013: Mac event rehearsal (D-015)
+Sony Mac bench only. Covers W-027. Expendable shots and a backed-up card.
+
+1. Pass V-006 first. `Still Img. Save Dest. = PC+Camera`.
+2. Launch CameraTether; **Copy Path** of the Inbox and set it as Imaging Edge Remote's save folder, JPEG only to the PC.
+3. Take 10 shots. **Expected:** each appears within a few seconds and shows a countdown.
+4. Delete 3 before the countdown ends, delete 1 after it uploaded, and restore 1 with ⌘Z.
+5. **Expected:** the iCloud Drive session folder holds exactly the 7 kept JPEGs; `Rejected/` holds 3; the card holds all 10 ARW + JPG.
+6. Quit and relaunch mid-session. **Expected:** the same shots and states reappear.
+7. **Failure interpretation:** shot never appears → Imaging Edge folder or JPEG setting; it appears late → file-completion wait; cloud copy survives a delete → sync client lag, which must be visible on the cloud side before the event is relied on.
+
 ### V-008: Disconnect, access, and lifecycle recovery
 Fault simulation first; physical idle/reconnect tests only afterward, and only on
 expendable captures once the relevant RAW-safety gate has passed (Sony V-007/S-G4;
@@ -154,6 +165,22 @@ PROGRESS.md cites these. One record per run; keep failed runs.
 - Changes: ownership recorded; Fujifilm W-020–W-024 and F-G0–F-G3 defined; shared prerequisites scoped per bench; shared safety instructions distinguish Sony settings from Fujifilm modes.
 - Validation: `git diff --check` passed; all 21 relative link targets in the eight changed Markdown files resolved; W-NNN table rows are unique and W-019–W-024 are present. No Swift files or Xcode settings changed; no compilation, simulator run, or hardware test performed.
 - Outcome: documents prepared for review. Every Fujifilm hardware gate remains pending.
+
+### RUN-20260923-01 — V-006 desktop `PC Remote` baseline (Sony)
+- Bench: MacBook Pro M2 Pro (2023), macOS 26.6.2; a7R III firmware 3.10; Imaging Edge Remote 4.1.00.03062.
+- Connection: Mac USB-C → USB-C-to-Lightning cable → Lightning-to-USB-C adapter → camera USB-C. Enumerated as `ILCE-7RM3` (0x054C:0x0C33) at 480 Mb/s. A different path through a USB-C hub/dongle did not enumerate the camera (only a `VLI USB2.0 BILLBOARD` device appeared); Apple Image Capture was quit before Remote connected.
+- Result: **pass.** LCD left "Connecting... USB"; Remote showed live view. `Still Img. Save Dest.` was found already at PC+Camera, so the factory-default behavior (step 5) was not observed; the shot landed on the Mac and the card, checked at both. With File Format RAW only the Mac received ARW; after File Format RAW & JPEG and `RAW+J PC Save Img = JPEG Only`, the card held RAW + JPEG and the Mac received JPEG only.
+
+### RUN-20260923-02 — Imaging Edge + CameraTether on the Mac (Sony; partial V-013)
+- Bench as RUN-20260923-01; CameraTether debug build from `julian/mac-event-cull`, Xcode 27.0; outbox in iCloud Drive.
+- Hang: Remote's save folder changed to the session Inbox mid-session, then one shot → Remote hung and was closed; shot lost on Mac and card (see Sony instructions). Recovered by battery pull; PC transfer setting had reverted.
+- Test A (CameraTether closed, Inbox set before shooting): Remote stayed responsive; JPEG saved to Inbox. Path with a space is fine.
+- Test B (CameraTether running): new shot appeared with countdown and published to iCloud Drive; the ARW from the reset shot was ignored as designed.
+- Delete before upload: never reached iCloud Drive. Delete after upload: removed from the local iCloud Drive folder in ~2 s (cloud-side propagation not measured). ⌘Z restore: republished immediately.
+- Relaunch mid-session (V-013 step 6): pass — shots and states restored; the pending shot's countdown restarted and it then published. Cloud-side sync observed as effectively immediate.
+- Ten-shot run: pass as reported by the Sony lead — no transfer or display lag noticed, deleted subset never uploaded, all shots persisted on the card. Exact per-file counts were not recorded.
+- V-013: **pass** (all steps).
+- Conclusion: CameraTether was not involved (Test B). The hang followed a save-folder change made while connected — one occurrence, not reproduced, so the cause is suspected, not proven. Workaround: do not change Remote's save folder while the camera is connected; disconnect in Remote first.
 
 ### RUN-YYYYMMDD-NN — template
 

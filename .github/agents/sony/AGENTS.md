@@ -14,7 +14,7 @@ _Last hardware observation: 2026-09-20._
 | Bench iPad | iPad Air (3rd gen), iPadOS **18.2.1** | **Lightning**, not USB-C. A12 |
 | Host adapter | Apple Lightning to USB 3 Camera Adapter (A1619) | **Not yet purchased.** Required: only Apple's Camera Adapter puts a Lightning iPad into USB-host mode. Negotiates USB 2.0 (480 Mbps) here. Lightning passthrough allows charging during a session |
 | Cable | USB-A to USB-C, 2 ft | Data-capable, verified 2026-09-20 |
-| Development host | MacBook Pro, macOS 26.6.2 (25G83) | Xcode not installed — Command Line Tools only |
+| Development host | MacBook Pro M2 Pro (2023), macOS 26.6.2 (25G83) | Xcode 27.0 (27A266a). Also the **event bench** for 2026-09-26: Imaging Edge tethers, CameraTether culls (D-014, D-015) |
 
 ## Tether chain
 
@@ -54,10 +54,28 @@ Apple's public APIs — but it is real adapter work, not a thin shim. See D-002.
 
 ## RAW safety
 
-In `PC Remote`, `Still Img. Save Dest.` defaults to **PC Only**: captures go to the
+Menu path on firmware 3.10: **MENU → Setup 4 → PC Remote Settings** holds
+`Still Img. Save Dest.` and `RAW+J PC Save Img`. Event configuration, verified
+2026-09-23: File Format **RAW & JPEG**, `Still Img. Save Dest.` **PC+Camera**,
+`RAW+J PC Save Img` **JPEG Only** — ARW + JPG on the card, JPG only on the Mac.
+
+In `PC Remote`, `Still Img. Save Dest.` is documented to default to **PC Only**: captures go to the
 host and are *not* written to the card. Set **PC+Camera** before any real shoot and
 verify ARW presence on the card (procedure V-007). This is the Sony counterpart of the
 X-T4's `TETHER SHOOTING FIXED` caveat, and it is worse — the default loses the file.
+
+**Observed 2026-09-23 — a hung host can lose a shot on both sides.** After Remote's
+save folder was changed mid-session, the next shot hung Remote. The camera showed a
+pending-transfer "1" icon, then a black "-PC-" screen, and locked `USB Connection`
+("PC Remote: On") across an off/on cycle. A battery pull cleared it, but at power-on the
+camera reported "Writing to the memory card was not completed correctly. Recover data?"
+(cancelled). That shot was on neither the Mac nor the card. Rules: never pull the battery
+while a transfer is pending; if the host hangs, quit it and unplug USB first. Cause of
+the hang is suspected, not proven (one occurrence, RUN-20260923-02): do not change
+Remote's save folder while the camera is connected — disconnect in Remote first. The battery pull also reverted the PC transfer setting: the
+next shot arrived on the Mac as ARW. **After any battery removal, recheck File Format,
+`Still Img. Save Dest.`, and `RAW+J PC Save Img` before shooting.** With them reset,
+the card held RAW + JPEG and the Mac received JPEG only.
 
 Dual-slot option for later: `Rec. Media Settings → Recording Mode → Sort(RAW/JPEG)`
 writes RAW to slot 1 and JPEG to slot 2 — a natural fit for "RAW stays on card, JPEG

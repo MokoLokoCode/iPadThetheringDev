@@ -8,6 +8,7 @@ equipment and gate results live in [.github/agents/](../agents/) — currently
 
 ## What actually works
 
+- **Mac event culling flow (D-014, D-015; W-025, W-026), 2026-09-23:** the shared app builds for macOS and the iOS Simulator on Xcode 27.0. On the Mac, JPEGs landing in a session Inbox publish to an outbox after a countdown unless deleted. File-logic harness 11/11; app smoke test with synthetic JPEGs and a scratch outbox passed. **Hardware-verified 2026-09-23** with the a7R III, Imaging Edge Remote and iCloud Drive: V-013 pass (RUN-20260923-02). Desktop `PC Remote` tethering works (V-006, RUN-20260923-01).
 - No software build or device launch has been demonstrated. The shared launch-only Xcode scaffold is proposed in [PR #6](https://github.com/MokoLokoCode/iPadThetheringDev/pull/6); it is not part of this documentation branch and is not a camera implementation.
 - Fujifilm (X-T4): Mario is the lead per his 2026-09-23 instruction; W-020–W-024 and F-G0–F-G3 are now defined. No adapter implementation or hardware result yet — see [Fujifilm instructions](../agents/fujifilm/AGENTS.md).
 - Sony: Mario's colleague leads the adapter, per the same instruction; their name was not supplied. Existing Sony findings and work items are retained.
@@ -17,7 +18,8 @@ equipment and gate results live in [.github/agents/](../agents/) — currently
 ## What is unverified
 
 - **Everything on the iPad path.** Adapter enumeration, `ICDeviceBrowser` discovery and `requestOpenSession` in `PC Remote` (S-G1 / W-009), the vendor handshake through `requestSendPTPCommand` (S-G2 / W-010), capture events (S-G3), and card retention (S-G4 / W-011).
-- Whether `PC Remote` tethering works at all on this body, even from a desktop. V-006 answers this with no code and no new hardware — it is the cheapest thing on the list and should run first.
+- Whether our own `PC Remote` handshake (S-G2) works; desktop tethering via Imaging Edge is verified (V-006).
+- Cause of the Remote hang after a mid-session save-folder change; avoided by setting the folder first.
 - Everything else in ARCHITECTURE.md remains a proposal. Preview latency target `N` (M3) and preview cache size are still unset.
 - Fujifilm: iPad Air 4 OS, X-T4 firmware, and Mario's Mac/Xcode versions remain unrecorded. USB visibility, AUTO physical-shutter events, JPEG retrieval, and RAW retention are all unverified.
 - Sony bench deployment target: the iPad Air 3 is on iPadOS 18.2.1; whether it can go further is unchecked. These are not Fujifilm environment values.
@@ -35,14 +37,15 @@ pending W-020 and must be recorded separately.
 | Tool | Version |
 | --- | --- |
 | macOS | 26.6.2 (25G83) |
-| Xcode | Not installed (Command Line Tools only) — install Xcode 27 |
+| Xcode | 27.0 (27A266a); Swift 6 language mode |
+| Mac | MacBook Pro M2 Pro, 2023 (Sony event bench) |
 | iPadOS (iPad Air 3) | 18.2.1 |
 | Camera firmware | 3.10 (Sony a7R III / ILCE-7RM3) |
 
 ## Last test results
 
 - 2026-09-20 — rig gate S-G0, Mac cable and USB-mode survey: **pass**. Details in the rig README → Camera USB modes.
-- No app build, automated test, or iPad-side test has been run.
+- 2026-09-23 — macOS + iOS Simulator builds succeed; D-015 file-logic harness 11/11 pass; Mac app smoke test (synthetic JPEGs, scratch outbox) pass. No camera run, no iPad device run.
 
 ## Next action per workstream
 
@@ -50,7 +53,11 @@ pending W-020 and must be recorded separately.
 Mac and iPad Air 4. Return Xcode/Swift/SDK/iPadOS/firmware/cable details plus the
 launch result or first error. Then implement the observational probe (W-021).
 
-**Sony / colleague:** retain the existing next action:
+**Sony / colleague:** event on 2026-09-26 16:30 runs on the Mac (D-014, D-015).
+V-006 and V-013 passed 2026-09-23; code is event-ready. Freeze after any final
+UI tweaks; rerun V-013 once on Friday. Plan A is Imaging Edge alone if V-013 fails.
+The iPad path (W-007, S-G1/S-G2) resumes after the event. Earlier next action, still
+the first step:
 
 Run **V-006** (desktop `PC Remote` baseline, W-006). It needs no code and no new
 hardware: install Sony Imaging Edge Desktop (Remote) on the Mac, confirm the camera
