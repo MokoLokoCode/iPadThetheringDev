@@ -169,7 +169,7 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
      see W-013), and numeric performance targets once V-012 has a baseline. -->
 
 ## D-016: Observe iPad camera discovery before opening a Fujifilm session
-- Status: Proposed implementation increment; hardware feasibility unverified
+- Status: Accepted; discovery hardware-verified (RUN-20260924-F2)
 - Date: 2026-09-24
 - Context: Mario reported the launch screen working on his physical iPad and requested the next device-discovery probe. The X-T4 has not been connected to that iPad during a recorded app run. A compiled probe on this Linux authoring host is unavailable.
 - Decision: Add a retained `ICDeviceBrowser` with `.camera` mask only to the iPad scene, while keeping the macOS culling scene intact. Log all discovered cameras and identify an X-T4 candidate by reported name; do not open a session or claim file notifications until the physical card-reader enumeration is observed. Limit the log to 200 entries and allow sharing it from the iPad. Add the `NSCameraUsageDescription` Info.plist value required by Apple's ImageCaptureCore guidance. No vendor PTP commands, downloads, or camera writes.
@@ -178,7 +178,7 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Deviations: W-021 remains in progress because session/catalog/items/PTP/marker and hardware evidence are absent. Follow up once the owner reports enumeration. Scope is iPad runtime only; the single target continues compiling for macOS after Xcode feedback.
 
 ## D-017: Probe Fujifilm device session after USB discovery
-- Status: Proposed implementation increment; session outcome unverified
+- Status: Accepted; session opening hardware-verified (RUN-20260924-F3)
 - Date: 2026-09-24
 - Context: Mario's physical iPad twice reported `X-T4` over `ICTransportTypeUSB` using the browser probe (RUN-20260924-F2). That clears discovery but establishes neither a session nor file access.
 - Decision: Set an `ICDeviceDelegate` on the matching camera, request one session, and log the open/close callbacks and errors. Close on idle Stop. Keep the current bounded log and do not request image files, vendor commands, or a camera shutter action.
@@ -186,9 +186,9 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Deviations: W-021 and F-G1 remain incomplete until Mario reports the session result, mode, catalog and disconnect/reconnect behavior. The item delegate is a later increment.
 
 ## D-018: Observe the X-T4 camera catalog before testing physical captures
-- Status: Proposed implementation increment; item/event behavior unverified
+- Status: Accepted; CARD READER catalog hardware-verified, physical capture events unverified (RUN-20260924-F4)
 - Date: 2026-09-24
 - Context: Mario's physical iPad opened X-T4 sessions repeatedly and observed device removal and reconnection (RUN-20260924-F3). Stop/Start without a physical reconnect did not visibly rediscover the still-connected camera in that run.
 - Decision: Adopt `ICCameraDeviceDelegate` for catalog-ready, item add/remove/rename and PTP event logs. Sample at most five names per batch and the first 32 bytes of each PTP event; keep the existing 200-entry buffer. In the card-reader test, distinguish the initial catalog from items added later. Do not treat browser Start as a guaranteed forced rescan; leave it running during a physical reconnect. No downloads, camera writes, or shutter commands.
 - Rationale: Session success is independent of content enumeration and physical shutter access. A read-only item log can establish whether the standard camera interface exposes filenames before testing tether mode.
-- Deviations: F-G1 remains pending because USB mode, catalog, known-file comparison and device environment were absent from the reported run. The shared diagnostic label changes; review its impact on both workstreams.
+- Deviations: The later F4 run confirmed USB CARD READER, RAW-only format and 17 filenames matching the card. F-G1 still needs an idle physical reconnect explicitly in that mode; the iPadOS/cable setup is unrecorded. The shared diagnostic label changes; review its impact on both workstreams.

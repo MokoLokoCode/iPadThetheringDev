@@ -3,12 +3,13 @@
 Adds to [../shared/AGENTS.md](../shared/AGENTS.md).
 
 **Lead: Mario**, per the owner's instruction on 2026-09-23; his colleague leads Sony.
-**Status: physical iPad discovery, session opens and 17-file catalog observed; F-G1 awaiting mode and card comparison.**
+**Status: USB CARD READER discovery, session and matching 17-file RAW catalog passed; F-G1 awaits a mode-labeled idle reconnect.**
 W-020–W-024 in the [shared backlog](../../project/PROGRESS.md) define the X-T4 path.
 `FujifilmDiscovery.swift` is a read-only browser, session, and item-event probe.
 Mario's 2026-09-24 log reports repeated X-T4 session opens and two complete
-catalogs of 17 `.RAF` filenames. USB mode, card comparison and RAW-retention
-result were not supplied.
+catalogs of 17 `.RAF` filenames. He confirmed USB CARD READER, RAW-only photo
+format and filename matches on the SD card. RAW retention during tethered
+shooting remains untested (RUN-20260924-F4).
 
 ## Equipment
 
@@ -65,7 +66,7 @@ catalog test and capture markers.
 ## Gates and work sequence
 
 These gates preserve the original X-T4 safety sequence while using the shared
-W-NNN backlog. **No full gate is passed yet.** Stop at each gate for Mario's actual results;
+W-NNN backlog. **F-G1 is partially verified; no full gate is passed yet.** Stop at each gate for Mario's actual results;
 mock events and another vendor's results cannot pass them.
 
 | Gate | Work | Required evidence |

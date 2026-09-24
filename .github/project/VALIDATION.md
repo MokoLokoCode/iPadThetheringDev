@@ -209,11 +209,11 @@ PROGRESS.md cites these. One record per run; keep failed runs.
 | --- | --- |
 | Procedure | W-021 camera delegate catalog; partial F-G1 |
 | Date / operator | 2026-09-24 13:19–13:20 local / Mario |
-| Environment | Physical personal iPad running the file-event probe from PR #12; X-T4 firmware 2.12 previously reported. Camera USB mode, physical iPadOS version, exact cable, and independent card listing not supplied with this run. |
+| Environment | Physical personal iPad running the file-event probe from PR #12; X-T4 firmware 2.12 previously reported. Mario subsequently confirmed `USB CARD READER` and RAW-only photo file format. Physical iPadOS version and exact cable remain unrecorded. |
 | Observed result | In each of two browser cycles, X-T4 was added over USB and opened a session. Seventeen individual `Catalog items added` callbacks named `_DSF1748.RAF` through `_DSF1764.RAF` (callback order was not filename order); `Camera catalog ready; mediaFiles=17` arrived about one to two seconds after session open. Device removal followed both observations; the second included the browser removal callback. The log alone does not establish whether the cable was physically replugged between cycles. |
 | Interpretation | **Catalog completion and filenames pass** on this iPad/camera connection. All 17 observed names end in `.RAF`; this run does not establish JPEG exposure, downloadability, or physical-shutter events. `handle=0` and `uti=public.image` are the API's reported values; neither proves a usable PTP object handle or a RAF/JPEG pairing. |
-| Gate status | F-G1 remains partial until Mario confirms the USB mode was `USB CARD READER`, compares at least one filename to the card, and supplies the remaining setup details. The repeated catalog consists of existing files, not new captures. |
-| Follow-up | Confirm camera mode, physical iPadOS, cable and card listing. If this was CARD READER, use a known JPEG+RAF test pair to check catalog visibility before moving to AUTO and marked physical-shutter exposures. |
+| Gate status | Mario confirmed the logged filenames match the files on the SD card. **USB CARD READER discovery, session and RAW catalog/filename comparison pass.** F-G1 remains partial because this log alone does not establish a physical idle unplug/replug in the confirmed mode; the earlier physical reconnect run (F3) did not record the mode. The repeated catalog consists of existing files, not new captures. |
+| Follow-up | At the next session, record physical iPadOS and cable, then document one idle unplug/replug while explicitly in USB CARD READER. Once F-G1 is complete, configure RAW+JPEG and USB TETHER SHOOTING AUTO for W-023's marked physical-shutter test. No JPEG was expected in this RAW-only card catalog; JPEG visibility, new-file callbacks, transfers and RAW retention under tethering are untested. |
 
 ### DOC-20260923-FUJI — Workstream activation
 
