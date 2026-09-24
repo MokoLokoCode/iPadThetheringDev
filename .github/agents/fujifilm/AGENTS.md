@@ -3,18 +3,18 @@
 Adds to [../shared/AGENTS.md](../shared/AGENTS.md).
 
 **Lead: Mario**, per the owner's instruction on 2026-09-23; his colleague leads Sony.
-**Status: workstream activated; implementation and hardware validation pending.**
+**Status: physical iPad launch owner-reported; browser discovery implementation authored, not yet compiled/tested on camera.**
 W-020–W-024 in the [shared backlog](../../project/PROGRESS.md) define the X-T4 path.
-No Fujifilm adapter code or hardware results exist yet. The launch-only application
-is proposed separately in [PR #6](https://github.com/MokoLokoCode/iPadThetheringDev/pull/6)
-and has not been compiled or run on an iPad by this agent.
+`FujifilmDiscovery.swift` is the read-only browser increment. Mario reported on
+2026-09-24 that Diagnostic View launches on his physical iPad. No X-T4 enumeration
+result, session, item callback, or RAW-retention run has been supplied.
 
 ## Equipment
 
 | Item | Model | Notes |
 | --- | --- | --- |
-| Camera | Fujifilm X-T4 | Firmware version never supplied |
-| Bench iPad | iPad Air (4th gen), USB-C | iPadOS version never supplied. Note this is **not** the iPad used for Sony work, which is Lightning |
+| Camera | Fujifilm X-T4 | Firmware 2.12, owner-reported 2026-09-24 |
+| Bench iPad | iPad Air (4th gen), USB-C | Physical iPadOS version still needed. The reported iPadOS 27 was for an M4 simulator, not this iPad. This is **not** the Lightning iPad used for Sony work |
 | Cable | Direct data-capable USB-C | Model, length, and speed unrecorded |
 
 ## Camera USB modes
@@ -55,6 +55,10 @@ open/close a session, log device/session/catalog information, item names, errors
 restrictions, and raw PTP events. No downloads, shutter triggers, storage-setting
 changes, deletions, or speculative vendor commands. Sony's D-002 handshake decision
 does not authorize Fujifilm vendor commands.
+
+The initial browser increment only discovers/removes devices and logs their names.
+It cannot yet enumerate files or respond to physical shutter captures. W-021 stays
+in progress until the SDK-verified session and camera delegates are added.
 
 ## Gates and work sequence
 

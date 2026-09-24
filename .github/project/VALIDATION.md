@@ -158,6 +158,29 @@ observation; app-only timings must not be called shutter latency.
 
 PROGRESS.md cites these. One record per run; keep failed runs.
 
+### RUN-20260924-F0 — Fujifilm launch and browser preparation
+
+| Field | Value |
+| --- | --- |
+| Procedure | W-004 launch evidence; W-020/F-G0 partial; W-021 browser preparation |
+| Date / operator | 2026-09-24 / Mario's report; code authored remotely on Linux |
+| Adapter | Fujifilm X-T4, firmware 2.12 (owner-reported) |
+| Camera mode / connection | USB CARD READER selected during earlier Mac-connected test; no physical X-T4 → iPad camera run yet |
+| Environment | Xcode 27 reported; physical iPad Air 4 launched Diagnostic View; physical iPadOS and exact cable still unknown. iPadOS 27 was simulator runtime |
+| Observed result | Static Diagnostic View appeared on the physical iPad; no discovery outcome reported |
+| Code verification | Project parse, source membership and whitespace checked on Linux; no Xcode/SDK compile or real USB execution here |
+| Follow-up | Build browser branch on physical iPad; share log for X-T4 direct USB connection in CARD READER. Then add session/catalog/event bridge |
+
+### RUN-20260924-F1 — Discovery probe compiler feedback
+
+| Field | Value |
+| --- | --- |
+| Procedure | W-021 Xcode build of Fujifilm browser probe |
+| Operator | Mario, physical iPad development environment |
+| Observed result | Build failed in `FujifilmDiscovery.swift` at `deviceBrowserDidEnumerateLocalDevices`: `Cannot override 'deviceBrowserDidEnumerateLocalDevices' which has been marked unavailable` |
+| Response | Removed the unavailable callback and its expected log line from the hardware instructions. Camera add/remove callbacks remain the discovery signal. |
+| Follow-up | Rebuild PR #9 and report the first remaining compiler error or the on-device browser log; USB detection has not yet been validated. |
+
 ### DOC-20260923-FUJI — Workstream activation
 
 - Work: W-019; decision D-013; documentation only, not a hardware run.
