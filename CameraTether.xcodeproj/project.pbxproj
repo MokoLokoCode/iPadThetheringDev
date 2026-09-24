@@ -8,12 +8,28 @@
 /* Begin PBXBuildFile section */
 		A10000000000000000000001 /* CameraTetherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* CameraTetherApp.swift */; };
 		A10000000000000000000002 /* DiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* DiagnosticView.swift */; };
+		A10000000000000000000013 /* CullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013 /* CullView.swift */; };
+		A10000000000000000000014 /* FilmstripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014 /* FilmstripView.swift */; };
+		A10000000000000000000015 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015 /* ImageLoader.swift */; };
+		A10000000000000000000016 /* SessionFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016 /* SessionFolders.swift */; };
+		A10000000000000000000017 /* CullStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000017 /* CullStore.swift */; };
+		A10000000000000000000018 /* CaptureSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000018 /* CaptureSource.swift */; };
+		A10000000000000000000019 /* FolderCaptureSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000019 /* FolderCaptureSource.swift */; };
+		A10000000000000000000020 /* PlatformShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000020 /* PlatformShell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A20000000000000000000001 /* CameraTetherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTetherApp.swift; sourceTree = "<group>"; };
 		A20000000000000000000002 /* DiagnosticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticView.swift; sourceTree = "<group>"; };
 		A20000000000000000000003 /* CameraTether.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraTether.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000013 /* CullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CullView.swift; sourceTree = "<group>"; };
+		A20000000000000000000014 /* FilmstripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmstripView.swift; sourceTree = "<group>"; };
+		A20000000000000000000015 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		A20000000000000000000016 /* SessionFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFolders.swift; sourceTree = "<group>"; };
+		A20000000000000000000017 /* CullStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CullStore.swift; sourceTree = "<group>"; };
+		A20000000000000000000018 /* CaptureSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSource.swift; sourceTree = "<group>"; };
+		A20000000000000000000019 /* FolderCaptureSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCaptureSource.swift; sourceTree = "<group>"; };
+		A20000000000000000000020 /* PlatformShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformShell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,7 +49,7 @@
 		};
 		A40000000000000000000002 /* CameraTether */ = {
 			isa = PBXGroup;
-			children = (A40000000000000000000003 /* App */, A40000000000000000000004 /* Features */);
+			children = (A40000000000000000000003 /* App */, A40000000000000000000009 /* Camera */, A40000000000000000000004 /* Features */, A40000000000000000000012 /* Platform */, A40000000000000000000008 /* Session */);
 			path = CameraTether;
 			sourceTree = "<group>";
 		};
@@ -45,7 +61,7 @@
 		};
 		A40000000000000000000004 /* Features */ = {
 			isa = PBXGroup;
-			children = (A40000000000000000000005 /* Diagnostics */);
+			children = (A40000000000000000000007 /* Cull */, A40000000000000000000005 /* Diagnostics */);
 			path = Features;
 			sourceTree = "<group>";
 		};
@@ -59,6 +75,42 @@
 			isa = PBXGroup;
 			children = (A20000000000000000000003 /* CameraTether.app */);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000007 /* Cull */ = {
+			isa = PBXGroup;
+			children = (A20000000000000000000013 /* CullView.swift */, A20000000000000000000014 /* FilmstripView.swift */, A20000000000000000000015 /* ImageLoader.swift */);
+			path = Cull;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000008 /* Session */ = {
+			isa = PBXGroup;
+			children = (A20000000000000000000016 /* SessionFolders.swift */, A20000000000000000000017 /* CullStore.swift */);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000009 /* Camera */ = {
+			isa = PBXGroup;
+			children = (A20000000000000000000018 /* CaptureSource.swift */, A40000000000000000000010 /* Adapters */);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000010 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (A40000000000000000000011 /* Folder */);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000011 /* Folder */ = {
+			isa = PBXGroup;
+			children = (A20000000000000000000019 /* FolderCaptureSource.swift */);
+			path = Folder;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000012 /* Platform */ = {
+			isa = PBXGroup;
+			children = (A20000000000000000000020 /* PlatformShell.swift */);
+			path = Platform;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,7 +164,7 @@
 		A70000000000000000000001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (A10000000000000000000001 /* CameraTetherApp.swift in Sources */, A10000000000000000000002 /* DiagnosticView.swift in Sources */);
+			files = (A10000000000000000000001 /* CameraTetherApp.swift in Sources */, A10000000000000000000002 /* DiagnosticView.swift in Sources */, A10000000000000000000013 /* CullView.swift in Sources */, A10000000000000000000014 /* FilmstripView.swift in Sources */, A10000000000000000000015 /* ImageLoader.swift in Sources */, A10000000000000000000016 /* SessionFolders.swift in Sources */, A10000000000000000000017 /* CullStore.swift in Sources */, A10000000000000000000018 /* CaptureSource.swift in Sources */, A10000000000000000000019 /* FolderCaptureSource.swift in Sources */, A10000000000000000000020 /* PlatformShell.swift in Sources */);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
@@ -129,6 +181,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -146,6 +199,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -157,6 +211,7 @@
 		A80000000000000000000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -167,7 +222,8 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.CameraTether;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -178,6 +234,7 @@
 		A80000000000000000000004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -188,7 +245,8 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.CameraTether;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;

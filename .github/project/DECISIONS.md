@@ -146,6 +146,24 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Rationale: Allows parallel work without confusing ownership with implemented capability, or one bench's prerequisites with the other's. The public API first approach remains the Fujifilm baseline; D-002 authorizes only the Sony workstream's vendor handshake.
 - Deviations: None in code; this is a documentation-only change. No adapter or hardware gate is complete. PR #6 supplies the shared launch scaffold separately. D-011/D-012 are left available for the decisions already proposed in pending PR #5 and the bootstrap record, avoiding concurrent reuse.
 
+## D-014: One multiplatform app — native macOS alongside iPadOS
+- Status: Accepted
+- Date: 2026-09-23
+- Context: The Sony bench cannot reach the iPad before a live event on 2026-09-26: the Lightning Camera Adapter (W-007) cannot be obtained in time. The M2 Pro MacBook Pro 2023 is available, and ImageCaptureCore, including `requestSendPTPCommand`, is public API on both macOS and iPadOS.
+- Decision: The single `CameraTether` target adds a native macOS destination (SwiftUI, macOS 14+). Platform differences live in a thin shell: `App/` and `Platform/` are the only places `#if os(...)` may appear. Session, camera, and feature code are platform-neutral and must keep compiling for iPadOS. The Mac build is ad-hoc signed and unsandboxed for local use; sandboxing is decided before any distribution.
+- Alternatives: Mac Catalyst (less native Mac app, no benefit for SwiftUI); running the iPad app on Apple silicon ("Designed for iPad"), where USB camera access is the least certain; a separate Mac app, which contradicts the shared-application rule.
+- Rationale: Adds a debuggable bench without a single-port problem and without forking features. Platform shells may add platform-specific capability (keyboard culling on the Mac) rather than reducing both to a common subset.
+- Deviations: The iPad destination still launches the D-013 baseline screen; the culling flow (D-015) runs only on the Mac for now. A Mac result never certifies the iPad path, as a Fujifilm result never certifies Sony: S-GN gates are recorded per platform.
+
+## D-015: Event culling flow — Inbox, delayed publish, reversible delete
+- Status: Accepted for the Sony Mac bench
+- Date: 2026-09-23
+- Context: The Sony lead needs, at the 2026-09-26 event, to delete passes as they arrive so that a near-real-time cloud upload contains only keepers. The PC Remote handshake (S-G2) is unproven, so Sony Imaging Edge Desktop is the Mac tether.
+- Decision: Imaging Edge saves JPEGs into the session's `Inbox` inside the app's session directory (`~/Pictures/CameraTether/<session>/`). `FolderCaptureSource` yields each file once it is complete. Every shot publishes after a countdown (default 20 s) by an atomic copy into an outbox folder (default iCloud Drive `CameraTether/<session>/`) unless deleted first. Delete moves the shot to `Rejected/` and withdraws any published copy; restore moves it back and publishes. State is derived from which folder holds the file; there is no manifest. JPEG only; RAW stays on the card (D-005).
+- Alternatives: Reading Imaging Edge's own folder (touches photos outside the session directory — shared safety rule); keep-to-publish (a keystroke per good shot); publish-immediately-then-withdraw (passes visible in the cloud); an in-app cloud client (V1 non-goal).
+- Rationale: The app writes only folders it created, and uploading is delegated to the platform sync client, so no cloud service is added. The delay means passes need an action and keepers need none.
+- Deviations: Supersedes D-006's single flag for this flow (delete/publish in place of a selection flag) and D-003's storage location on the Mac. "Delete" removes only the app's own copies: camera originals are untouched and the deleted JPEG stays in `Rejected/`. Needs review by the Fujifilm lead because it changes shared UI and storage.
+
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,
      see W-013), and numeric performance targets once V-012 has a baseline. -->

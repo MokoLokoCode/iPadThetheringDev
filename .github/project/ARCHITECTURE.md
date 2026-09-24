@@ -15,6 +15,8 @@ this document details what sits above that boundary. Vendor specifics belong in
 | Session store | On-disk layout of sessions and captures; the only component that writes files. |
 | Preview pipeline | Decodes/downscales the latest capture for on-screen display. |
 | UI | Session controls, connection state, latest-capture preview, capture list. |
+| Platform shell | `App/` and `Platform/`: per-platform defaults (session and outbox roots), file-browser reveal, clipboard, root scene. The only place `#if os(...)` appears (D-014). |
+| Capture source | `CaptureSource` yields complete JPEGs in the session Inbox. `FolderCaptureSource` watches a folder another app writes (Imaging Edge on the Mac, D-015); camera adapters will download into the same Inbox. |
 
 <!-- TODO: fill in concrete types/modules once the first spike lands. -->
 
