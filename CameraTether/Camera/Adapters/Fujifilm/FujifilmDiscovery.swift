@@ -62,11 +62,6 @@ final class FujifilmDiscovery: NSObject, ObservableObject, @preconcurrency ICDev
         }
     }
 
-    func deviceBrowserDidEnumerateLocalDevices(_ browser: ICDeviceBrowser) {
-        guard running else { return }
-        record("Initial local camera enumeration completed")
-    }
-
     private func record(_ message: String) {
         let event = CameraDiagnosticEvent(message: message)
         events.append(event)

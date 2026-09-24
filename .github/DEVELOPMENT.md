@@ -22,8 +22,8 @@ physical USB path.
 5. Tap **Share log** to send a sanitized text copy of the result. Record cable,
    hub/no hub, and whether the camera or iPad displayed any permission message.
 
-If no device appears, share the log including **Initial local camera enumeration
-completed**, any iPad permission prompt, and the exact USB setup. If Xcode fails to
+If no device appears, share the log including **Browser starting (camera mask)**,
+any iPad permission prompt, and the exact USB setup. If Xcode fails to
 compile, share the **first compiler error with its file/line** and the full
 `xcodebuild -version` output. This authored probe has not been compiled by the
 remote agent. It does not open sessions, list files, receive shutter events or

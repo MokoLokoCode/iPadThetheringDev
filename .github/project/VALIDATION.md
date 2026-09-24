@@ -171,6 +171,16 @@ PROGRESS.md cites these. One record per run; keep failed runs.
 | Code verification | Project parse, source membership and whitespace checked on Linux; no Xcode/SDK compile or real USB execution here |
 | Follow-up | Build browser branch on physical iPad; share log for X-T4 direct USB connection in CARD READER. Then add session/catalog/event bridge |
 
+### RUN-20260924-F1 — Discovery probe compiler feedback
+
+| Field | Value |
+| --- | --- |
+| Procedure | W-021 Xcode build of Fujifilm browser probe |
+| Operator | Mario, physical iPad development environment |
+| Observed result | Build failed in `FujifilmDiscovery.swift` at `deviceBrowserDidEnumerateLocalDevices`: `Cannot override 'deviceBrowserDidEnumerateLocalDevices' which has been marked unavailable` |
+| Response | Removed the unavailable callback and its expected log line from the hardware instructions. Camera add/remove callbacks remain the discovery signal. |
+| Follow-up | Rebuild PR #9 and report the first remaining compiler error or the on-device browser log; USB detection has not yet been validated. |
+
 ### DOC-20260923-FUJI — Workstream activation
 
 - Work: W-019; decision D-013; documentation only, not a hardware run.
