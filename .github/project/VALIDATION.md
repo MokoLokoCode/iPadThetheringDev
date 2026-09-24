@@ -203,6 +203,18 @@ PROGRESS.md cites these. One record per run; keep failed runs.
 | Conclusion | **Session opening passes** on the physical iPad; removal and physical reconnection can lead to another session. Browser Stop/Start while the cable remained connected did not visibly rediscover a camera in this run. The log lacks a session-close callback, so a clean close on Stop is not established. No catalog or new-photo signal was implemented in this build. |
 | Follow-up | Build D-018 catalog/item/PTP observer. In USB CARD READER, compare sample names with known files, record catalog completion and idle reconnect; collect physical iPadOS, camera mode, cable and build result. |
 
+### RUN-20260924-F4 — X-T4 camera catalog on physical iPad
+
+| Field | Value |
+| --- | --- |
+| Procedure | W-021 camera delegate catalog; partial F-G1 |
+| Date / operator | 2026-09-24 13:19–13:20 local / Mario |
+| Environment | Physical personal iPad running the file-event probe from PR #12; X-T4 firmware 2.12 previously reported. Camera USB mode, physical iPadOS version, exact cable, and independent card listing not supplied with this run. |
+| Observed result | On each of two connections, X-T4 was added over USB and opened a session. Seventeen individual `Catalog items added` callbacks named `_DSF1748.RAF` through `_DSF1764.RAF` (callback order was not filename order); `Camera catalog ready; mediaFiles=17` arrived about one to two seconds after session open. Device removal followed both observations; the second included the browser removal callback. |
+| Interpretation | **Catalog completion and filenames pass** on this iPad/camera connection. All 17 observed names end in `.RAF`; this run does not establish JPEG exposure, downloadability, or physical-shutter events. `handle=0` and `uti=public.image` are the API's reported values; neither proves a usable PTP object handle or a RAF/JPEG pairing. |
+| Gate status | F-G1 remains partial until Mario confirms the USB mode was `USB CARD READER`, compares at least one filename to the card, and supplies the remaining setup details. The repeated catalog after reconnection consists of existing files, not new captures. |
+| Follow-up | Confirm camera mode, physical iPadOS, cable and card listing. If this was CARD READER, use a known JPEG+RAF test pair to check catalog visibility before moving to AUTO and marked physical-shutter exposures. |
+
 ### DOC-20260923-FUJI — Workstream activation
 
 - Work: W-019; decision D-013; documentation only, not a hardware run.
