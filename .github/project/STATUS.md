@@ -9,7 +9,7 @@ equipment and gate results live in [.github/agents/](../agents/) — currently
 ## What actually works
 
 - **Mac event culling flow (D-014, D-015; W-025, W-026), 2026-09-23:** the shared app builds for macOS and the iOS Simulator on Xcode 27.0. On the Mac, JPEGs landing in a session Inbox publish to an outbox after a countdown unless deleted. File-logic harness 11/11; app smoke test with synthetic JPEGs and a scratch outbox passed. **Hardware-verified 2026-09-23** with the a7R III, Imaging Edge Remote and iCloud Drive: V-013 pass (RUN-20260923-02). Desktop `PC Remote` tethering works (V-006, RUN-20260923-01).
-- Fujifilm (X-T4): Mario ran the discovery probe on his physical iPad. ImageCaptureCore reported `Device added: X-T4; transport=ICTransportTypeUSB` twice, once after restarting the browser (RUN-20260924-F2). This confirms discovery through the iPad app; no session or file callback has been tested. See [Fujifilm instructions](../agents/fujifilm/AGENTS.md).
+- Fujifilm (X-T4): Mario's physical iPad discovered the USB camera, opened a session (`hasOpenSession=true`), then opened fresh sessions after physical reconnections (RUN-20260924-F2/F3). No catalog or file callback has been reported. See [Fujifilm instructions](../agents/fujifilm/AGENTS.md).
 - Sony: Mario's colleague leads the adapter, per the same instruction; their name was not supplied. Existing Sony findings and work items are retained.
 - Hardware: rig gate **S-G0 passed** 2026-09-20 — the cable carries data and the camera's USB modes have been surveyed. Observations are in the [Sony adapter instructions](../agents/sony/AGENTS.md); the consequence for the design is D-002.
 - Documentation: scope, target rig, transport (D-002), storage (D-003), docs layout (D-004), and the product decisions harvested from the X-T4 package (D-005…D-009) are settled. W-001, W-002, and W-003 are Done with evidence. The backlog now runs to V1 acceptance (W-017) with procedures V-001…V-012 behind it.
@@ -20,13 +20,13 @@ equipment and gate results live in [.github/agents/](../agents/) — currently
 - Whether our own `PC Remote` handshake (S-G2) works; desktop tethering via Imaging Edge is verified (V-006).
 - Cause of the Remote hang after a mid-session save-folder change; avoided by setting the folder first.
 - Everything else in ARCHITECTURE.md remains a proposal. Preview latency target `N` (M3) and preview cache size are still unset.
-- Fujifilm: iPad Air 4 OS, exact cable, and X-T4 USB mode during the log remain unrecorded. Mario reported Xcode 27 and X-T4 firmware 2.12. Open session/catalog, AUTO physical-shutter events, JPEG retrieval, and RAW retention are unverified.
+- Fujifilm: iPad Air 4 OS, exact cable, and X-T4 USB mode during the log remain unrecorded. Mario reported Xcode 27 and X-T4 firmware 2.12. Catalog, AUTO physical-shutter events, JPEG retrieval, and RAW retention are unverified. Browser Stop/Start alone did not visibly rediscover the still-connected camera in RUN-20260924-F3; the cause is unknown.
 - Sony bench deployment target: the iPad Air 3 is on iPadOS 18.2.1; whether it can go further is unchecked. These are not Fujifilm environment values.
 
 ## Blockers
 
 - **Sony bench:** Apple Lightning to USB 3 Camera Adapter (A1619) not purchased (W-007); Xcode not installed (W-008), Command Line Tools only. These recorded blockers apply to the Sony bench, not Mario's USB-C iPad Air 4.
-- **Fujifilm bench:** physical app launch and X-T4 USB discovery passed. F-G0 still needs iPadOS/cable and installed SDK checks; F-G1 still needs mode, session, catalog, and reconnect evidence.
+- **Fujifilm bench:** physical app launch, X-T4 USB discovery and session opening passed. F-G0 still needs iPadOS/cable and installed SDK checks; F-G1 still needs mode, catalog and known-file comparison.
 
 ## Environment versions
 
@@ -43,16 +43,18 @@ pending W-020 and must be recorded separately.
 
 ## Last test results
 
+- 2026-09-24 — owner-reported repeated X-T4 session opens and device removal/reconnect. Stop/Start did not visibly rescan a still-connected camera (RUN-20260924-F3). Catalog/item callbacks were not in that build.
 - 2026-09-24 UTC (2026-09-23 local) — owner-reported X-T4 discovery over `ICTransportTypeUSB` twice on physical iPad; session not opened (RUN-20260924-F2). The first probe had an unavailable callback build error, fixed before this run (RUN-20260924-F1).
 - 2026-09-20 — rig gate S-G0, Mac cable and USB-mode survey: **pass**. Details in the rig README → Camera USB modes.
 - 2026-09-23 — macOS + iOS Simulator builds succeed; D-015 file-logic harness 11/11 pass; Mac app smoke test (synthetic JPEGs, scratch outbox) pass. No camera run, no iPad device run.
 
 ## Next action per workstream
 
-**Fujifilm / Mario:** build the session probe on the physical iPad, connect the
-X-T4 in USB CARD READER mode, and share open/close or error lines. Report the USB
-mode, physical iPadOS, and cable. File/catalog and physical shutter callbacks
-follow after we interpret the session result.
+**Fujifilm / Mario:** build the catalog probe on the physical iPad, connect the
+X-T4 in USB CARD READER mode with known expendable files, and share catalog-ready,
+item and PTP lines plus a known-file comparison. Leave the browser running for an
+idle physical reconnect. Report physical iPadOS and cable. Test AUTO physical
+shutter only after interpreting the card-reader result.
 
 **Sony / colleague:** event on 2026-09-26 16:30 runs on the Mac (D-014, D-015).
 V-006 and V-013 passed 2026-09-23; code is event-ready. Freeze after any final

@@ -192,6 +192,17 @@ PROGRESS.md cites these. One record per run; keep failed runs.
 | Conclusion | **Discovery passes** on the physical iPad. The Stop/Start sequence shows re-enumeration by the browser, not physical USB disconnect/reconnect or session access. |
 | Follow-up | Build the D-017 session probe; report open/close or error lines, X-T4 USB mode, physical iPadOS, and connection path. Do not infer file or capture-event access yet. |
 
+### RUN-20260924-F3 — X-T4 physical iPad session and reconnect
+
+| Field | Value |
+| --- | --- |
+| Procedure | W-021 session probe; partial F-G1 |
+| Date / operator | 2026-09-24 13:02–13:07 local / Mario |
+| Environment | Physical personal iPad with merged PRs #9/#10; X-T4 firmware 2.12 previously reported. iPadOS, exact cable, USB mode and card contents not supplied with this run. |
+| Observed result | A first Start/Stop produced only browser start/stop. On a later connection, `Device added: X-T4; transport=ICTransportTypeUSB`, followed immediately by `Camera session opened; hasOpenSession=true`. Device delegate removal appeared at 13:03:23. The log later records session opens at 13:06:16, 13:06:40 and 13:07:09, with device removals between the latter connections. |
+| Conclusion | **Session opening passes** on the physical iPad; removal and physical reconnection can lead to another session. Browser Stop/Start while the cable remained connected did not visibly rediscover a camera in this run. The log lacks a session-close callback, so a clean close on Stop is not established. No catalog or new-photo signal was implemented in this build. |
+| Follow-up | Build D-018 catalog/item/PTP observer. In USB CARD READER, compare sample names with known files, record catalog completion and idle reconnect; collect physical iPadOS, camera mode, cable and build result. |
+
 ### DOC-20260923-FUJI — Workstream activation
 
 - Work: W-019; decision D-013; documentation only, not a hardware run.

@@ -1,12 +1,10 @@
 # Run the first CameraTether build
 
-## Fujifilm session branch test (W-021)
+## Fujifilm catalog and event probe (W-021, W-022)
 
-The iPad scene now has a read-only ImageCaptureCore browser and session probe. Run the
-`mario/fujifilm-session-probe` branch on your physical iPad Air 4 after reviewing its
-PR. Xcode may display a camera-access prompt from the usage description added in
-this branch; allow access for this test. The M4 simulator cannot validate the
-physical USB path.
+The physical iPad has discovered the X-T4 and opened a session. This branch adds
+camera catalog, item, and raw PTP event logs. Run `mario/fujifilm-file-events`
+after reviewing its PR. The simulator cannot validate physical USB behavior.
 
 1. Record **Settings → General → About → iPadOS Version** on the physical iPad.
 2. While the iPad is connected to Xcode, build/install/run `CameraTether` and
@@ -15,22 +13,28 @@ physical USB path.
 3. Unplug the iPad from the Mac. Set the X-T4 to **USB CARD READER** and use a
    backed-up/test SD card. Connect the X-T4 directly to the iPad with a
    data-capable USB-C cable, then power the camera on. Leave the app foregrounded.
-4. Wait for **Device added**, **requesting camera session**, and **Camera session
-   opened** or **Camera session open failed**. An open session does not mean a
-   photo was transferred. Tap **Stop** while idle and look for **Camera session
-   closed**. Restart for a second observation, then disconnect while idle.
-5. Tap **Share log** to send a sanitized text copy of the result. Record cable,
+4. Wait for **Device added**, **Camera session opened**, and **Camera catalog
+   ready**. If catalog-ready never arrives, record how long you waited and share
+   the other lines. The first five media filenames, if any, are logged as a
+   sample; compare them to known files on the card. Initial catalog additions
+   are not new exposures.
+5. Leave the browser running and physically disconnect/reconnect once while
+   idle. Watch for device removal, a second session open, and catalog readiness.
+   Tap **Stop** only after the observation; it stops listening and requests a
+   session close. **Start** resumes listening, but does not guarantee a rescan
+   of a camera that stayed plugged in (RUN-20260924-F3).
+6. Tap **Share log** to send a sanitized text copy of the result. Record cable,
    hub/no hub, and whether the camera or iPad displayed any permission message.
 
-If no device appears, share the log including **Browser starting (camera mask)**,
-any iPad permission prompt, and the exact USB setup. If Xcode fails to
-compile, share the **first compiler error with its file/line** and the full
-`xcodebuild -version` output. This authored probe has not been compiled by the
-remote agent. It does not open sessions, list files, receive shutter events or
-download anything; those capabilities follow the discovery result.
+If no catalog appears, share the session and device lines, any permission prompt,
+and the exact USB setup. If Xcode fails to compile, share the first compiler error
+with its file/line and `xcodebuild -version`. This authored increment has not been
+compiled by the remote agent. It logs item callbacks but does not download files,
+send shutter commands, or establish physical-shutter access. Wait for the catalog
+result before testing **USB TETHER SHOOTING AUTO**.
 
-The original bootstrap displayed a static diagnostic view. The session probe above
-supersedes that behavior on this branch.
+The original bootstrap displayed a static diagnostic view. This probe supersedes
+that behavior on this branch.
 
 ## Get the project on your Mac
 
@@ -39,22 +43,22 @@ any local work:
 
 ```bash
 git fetch origin
-git switch --track origin/mario/cameratether-bootstrap
+git switch --track origin/mario/fujifilm-file-events
 open CameraTether.xcodeproj
 ```
 
-If you already have that local branch, use `git switch mario/cameratether-bootstrap`
+If you already have that local branch, use `git switch mario/fujifilm-file-events`
 instead. For a fresh clone:
 
 ```bash
-git clone --branch mario/cameratether-bootstrap https://github.com/MokoLokoCode/iPadThetheringDev.git
+git clone --branch mario/fujifilm-file-events https://github.com/MokoLokoCode/iPadThetheringDev.git
 cd iPadThetheringDev
 open CameraTether.xcodeproj
 ```
 
 Open the checked-in project directly. Do not create another Xcode project or copy
 these files into a second repository. All changes stay on a feature branch and
-go through a PR; this bootstrap PR must not be merged automatically.
+go through a PR for review.
 
 ## Toolchain and settings
 
@@ -70,19 +74,19 @@ xcodebuild -showsdks
 | Setting | Checked-in value |
 | --- | --- |
 | Project, app target, shared scheme | `CameraTether` |
-| Destinations | iPad and iPad simulator |
+| Destinations | iPad, iPad simulator, and macOS |
 | Minimum deployment target | iPadOS 17.0; provisional until your iPad version is recorded |
 | Language | Swift 6; no concurrency suppression or default-isolation override |
 | Configurations | Debug and Release |
 | Signing | Automatic; no development team checked in |
 | Bundle identifier | `com.example.CameraTether`; replace for device signing |
-| Dependencies, camera permissions, entitlements | None in this launch-only build |
+| Dependencies, camera permissions, entitlements | No third-party dependencies; `NSCameraUsageDescription` for ImageCaptureCore; check signing settings for your device |
 
 The `.xcodeproj` is the only app build definition. Its older project-file format
 does not lower the Swift 6 compiler requirement. There is no package manifest or
 project generator. Xcode generates Info.plist and the launch screen from build
-settings. A custom app icon and test target are deferred; this build has no
-application logic to unit-test and is not a distribution-ready archive.
+settings. A custom app icon and camera test target are deferred. This is not a
+distribution-ready archive.
 
 ## Simulator first
 

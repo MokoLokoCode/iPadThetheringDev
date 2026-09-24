@@ -184,3 +184,11 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Decision: Set an `ICDeviceDelegate` on the matching camera, request one session, and log the open/close callbacks and errors. Close on idle Stop. Keep the current bounded log and do not request image files, vendor commands, or a camera shutter action.
 - Rationale: Apple documents `requestOpenSession()` and its delegate callback; isolating this step makes failures in session access distinguishable from camera object events.
 - Deviations: W-021 and F-G1 remain incomplete until Mario reports the session result, mode, catalog and disconnect/reconnect behavior. The item delegate is a later increment.
+
+## D-018: Observe the X-T4 camera catalog before testing physical captures
+- Status: Proposed implementation increment; item/event behavior unverified
+- Date: 2026-09-24
+- Context: Mario's physical iPad opened X-T4 sessions repeatedly and observed device removal and reconnection (RUN-20260924-F3). Stop/Start without a physical reconnect did not visibly rediscover the still-connected camera in that run.
+- Decision: Adopt `ICCameraDeviceDelegate` for catalog-ready, item add/remove/rename and PTP event logs. Sample at most five names per batch and the first 32 bytes of each PTP event; keep the existing 200-entry buffer. In the card-reader test, distinguish the initial catalog from items added later. Do not treat browser Start as a guaranteed forced rescan; leave it running during a physical reconnect. No downloads, camera writes, or shutter commands.
+- Rationale: Session success is independent of content enumeration and physical shutter access. A read-only item log can establish whether the standard camera interface exposes filenames before testing tether mode.
+- Deviations: F-G1 remains pending because USB mode, catalog, known-file comparison and device environment were absent from the reported run. The shared diagnostic label changes; review its impact on both workstreams.

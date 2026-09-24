@@ -37,11 +37,10 @@ across workstreams; do not create a second application or duplicate shared modul
 ## First build: the diagnostic probe
 
 The Fujifilm probe retains `ICDeviceBrowser`, observes camera add/remove, then
-requests an `ICDevice` session for the X-T4 and logs the result. It publishes a
-bounded diagnostic event list. The
-brand-neutral `DiagnosticView` displays that list on iPad; the macOS culling flow
-continues to use its separate scene. It does not receive camera item/PTP
-callbacks. Those remain W-021 work after session evidence.
+requests an `ICDevice` session for the X-T4. `ICCameraDeviceDelegate` records
+catalog completion, sampled item names and bounded raw PTP event prefixes. The
+brand-neutral `DiagnosticView` displays a bounded log on iPad; the macOS culling
+flow continues to use its separate scene. No image transfer is implemented.
 
 The first build observes; it does not act. No download, no shutter command, no setting
 write, no deletion, no arbitrary vendor command.

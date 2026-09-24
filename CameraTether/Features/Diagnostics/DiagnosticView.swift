@@ -12,7 +12,7 @@ struct DiagnosticView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
                 Text(status).font(.headline)
-                Text("Camera discovery and session probe. File events and downloads are not implemented yet.")
+                Text("Camera catalog and file event probe. Image downloads are not implemented yet.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 
