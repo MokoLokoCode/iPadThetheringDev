@@ -167,3 +167,12 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 <!-- TODO next decisions: min iPadOS version, UI framework, session persistence
      mechanism (JSON manifest vs. SwiftData/SQLite — decide with real data volume,
      see W-013), and numeric performance targets once V-012 has a baseline. -->
+
+## D-016: Observe iPad camera discovery before opening a Fujifilm session
+- Status: Proposed implementation increment; hardware feasibility unverified
+- Date: 2026-09-24
+- Context: Mario reported the launch screen working on his physical iPad and requested the next device-discovery probe. The X-T4 has not been connected to that iPad during a recorded app run. A compiled probe on this Linux authoring host is unavailable.
+- Decision: Add a retained `ICDeviceBrowser` with `.camera` mask only to the iPad scene, while keeping the macOS culling scene intact. Log all discovered cameras and identify an X-T4 candidate by reported name; do not open a session or claim file notifications until the physical card-reader enumeration is observed. Limit the log to 200 entries and allow sharing it from the iPad. Add the `NSCameraUsageDescription` Info.plist value required by Apple's ImageCaptureCore guidance. No vendor PTP commands, downloads, or camera writes.
+- Alternatives: Implement browser, session and file-event bridge in one uncompiled PR; a discovery-only increment gives the owner an independently diagnosable USB result first.
+- Rationale: A camera's visibility to iPad ImageCaptureCore is the lowest unverified assumption; a name match only labels a candidate and never establishes full compatibility.
+- Deviations: W-021 remains in progress because session/catalog/items/PTP/marker and hardware evidence are absent. Follow up once the owner reports enumeration. Scope is iPad runtime only; the single target continues compiling for macOS after Xcode feedback.

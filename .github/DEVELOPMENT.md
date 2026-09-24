@@ -1,5 +1,34 @@
 # Run the first CameraTether build
 
+## Fujifilm discovery branch test (W-021)
+
+The iPad scene now has a read-only ImageCaptureCore browser. Run the
+`mario/fujifilm-discovery` branch on your physical iPad Air 4 after reviewing its
+PR. Xcode may display a camera-access prompt from the usage description added in
+this branch; allow access for this test. The M4 simulator cannot validate the
+physical USB path.
+
+1. Record **Settings → General → About → iPadOS Version** on the physical iPad.
+2. While the iPad is connected to Xcode, build/install/run `CameraTether` and
+   confirm the screen shows **Camera diagnostics** and **Searching for cameras**.
+   Use your local development team and bundle ID as before.
+3. Unplug the iPad from the Mac. Set the X-T4 to **USB CARD READER** and use a
+   backed-up/test SD card. Connect the X-T4 directly to the iPad with a
+   data-capable USB-C cable, then power the camera on. Leave the app foregrounded.
+4. Wait for the log. **Device added** with a name/transport is the first result;
+   **Fujifilm candidate identified** is a name match. Neither means a session is
+   open or a photo transferred. Tap **Stop** then **Start** for a second idle
+   observation, and disconnect the camera when it is idle.
+5. Tap **Share log** to send a sanitized text copy of the result. Record cable,
+   hub/no hub, and whether the camera or iPad displayed any permission message.
+
+If no device appears, share the log including **Initial local camera enumeration
+completed**, any iPad permission prompt, and the exact USB setup. If Xcode fails to
+compile, share the **first compiler error with its file/line** and the full
+`xcodebuild -version` output. This authored probe has not been compiled by the
+remote agent. It does not open sessions, list files, receive shutter events or
+download anything; those capabilities follow the discovery result.
+
 This increment supplies a shared SwiftUI iPad application, not camera detection.
 The screen says **CameraTether is running** and explicitly states that camera
 connection is not implemented. Connecting a camera will have no effect yet.

@@ -36,6 +36,13 @@ across workstreams; do not create a second application or duplicate shared modul
 
 ## First build: the diagnostic probe
 
+The 2026-09-24 Fujifilm discovery increment implements only the browser half of
+this proposal. `FujifilmDiscovery` retains `ICDeviceBrowser`, observes camera
+add/remove/local enumeration, and publishes a bounded diagnostic event list. The
+brand-neutral `DiagnosticView` displays that list on iPad; the macOS culling flow
+continues to use its separate scene. It does not open a session or receive camera
+item/PTP callbacks. Those remain W-021 work after USB enumeration evidence.
+
 The first build observes; it does not act. No download, no shutter command, no setting
 write, no deletion, no arbitrary vendor command.
 

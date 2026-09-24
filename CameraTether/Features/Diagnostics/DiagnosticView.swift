@@ -1,33 +1,44 @@
 import SwiftUI
 
-/// The launch baseline, before adding a camera transport or diagnostic events.
+/// Brand-neutral presentation; no ImageCaptureCore objects enter this view.
 struct DiagnosticView: View {
+    let status: String
+    let events: [CameraDiagnosticEvent]
+    let exportText: String
+    let start: () -> Void
+    let stop: () -> Void
+
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    Label("Setup build", systemImage: "ipad")
-                        .font(.title2.bold())
+            VStack(alignment: .leading, spacing: 12) {
+                Text(status).font(.headline)
+                Text("Discovery only. File events and downloads will be added after the physical USB test.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
 
-                    Text("CameraTether is running")
-                        .font(.title.bold())
-                        .accessibilityAddTraits(.isHeader)
-
-                    Text("This first build checks that the app launches on your iPad.")
-
-                    Divider()
-
-                    Label("Camera connection is not implemented yet", systemImage: "camera")
-                        .font(.headline)
-
-                    Text("After the launch test, we’ll add camera discovery and capture-event logging.")
-                        .foregroundStyle(.secondary)
+                HStack {
+                    Button("Start", action: start)
+                    Button("Stop", action: stop)
+                    ShareLink(item: exportText) {
+                        Label("Share log", systemImage: "square.and.arrow.up")
+                    }
+                    .disabled(events.isEmpty)
                 }
-                .frame(maxWidth: 640, alignment: .leading)
-                .padding(24)
-                .frame(maxWidth: .infinity, alignment: .center)
+                .buttonStyle(.bordered)
+
+                List(events.reversed()) { event in
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(event.time.formatted(date: .numeric, time: .standard))
+                            .font(.caption.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                        Text(event.message)
+                            .font(.callout.monospaced())
+                            .textSelection(.enabled)
+                    }
+                }
             }
-            .navigationTitle("CameraTether")
+            .padding(.horizontal)
+            .navigationTitle("Camera diagnostics")
         }
     }
 }

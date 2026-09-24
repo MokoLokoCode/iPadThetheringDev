@@ -7,6 +7,8 @@ struct CameraTetherApp: App {
         sessionsRoot: PlatformShell.sessionsRoot,
         defaultOutboxRoot: PlatformShell.defaultOutboxRoot
     )
+    #else
+    @StateObject private var fujifilmDiscovery = FujifilmDiscovery()
     #endif
 
     var body: some Scene {
@@ -18,9 +20,17 @@ struct CameraTetherApp: App {
                 .onAppear { store.start() }
         }
         #else
-        // The iPad keeps the launch baseline until its camera path is validated.
+        // The iPad uses the observational Fujifilm discovery probe.
         WindowGroup {
-            DiagnosticView()
+            DiagnosticView(
+                status: fujifilmDiscovery.status,
+                events: fujifilmDiscovery.events,
+                exportText: fujifilmDiscovery.exportText,
+                start: { fujifilmDiscovery.start() },
+                stop: { fujifilmDiscovery.stop() }
+            )
+            .onAppear { fujifilmDiscovery.start() }
+            .onDisappear { fujifilmDiscovery.stop() }
         }
         #endif
     }

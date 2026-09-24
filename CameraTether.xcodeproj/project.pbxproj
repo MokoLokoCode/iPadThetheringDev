@@ -16,6 +16,8 @@
 		A10000000000000000000018 /* CaptureSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000018 /* CaptureSource.swift */; };
 		A10000000000000000000019 /* FolderCaptureSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000019 /* FolderCaptureSource.swift */; };
 		A10000000000000000000020 /* PlatformShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000020 /* PlatformShell.swift */; };
+		A10000000000000000000021 /* FujifilmDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000021 /* FujifilmDiscovery.swift */; };
+		A10000000000000000000022 /* DiagnosticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000022 /* DiagnosticEvent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		A20000000000000000000018 /* CaptureSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSource.swift; sourceTree = "<group>"; };
 		A20000000000000000000019 /* FolderCaptureSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCaptureSource.swift; sourceTree = "<group>"; };
 		A20000000000000000000020 /* PlatformShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformShell.swift; sourceTree = "<group>"; };
+		A20000000000000000000021 /* FujifilmDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FujifilmDiscovery.swift; sourceTree = "<group>"; };
+		A20000000000000000000022 /* DiagnosticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticEvent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,13 +95,13 @@
 		};
 		A40000000000000000000009 /* Camera */ = {
 			isa = PBXGroup;
-			children = (A20000000000000000000018 /* CaptureSource.swift */, A40000000000000000000010 /* Adapters */);
+			children = (A20000000000000000000018 /* CaptureSource.swift */, A20000000000000000000022 /* DiagnosticEvent.swift */, A40000000000000000000010 /* Adapters */);
 			path = Camera;
 			sourceTree = "<group>";
 		};
 		A40000000000000000000010 /* Adapters */ = {
 			isa = PBXGroup;
-			children = (A40000000000000000000011 /* Folder */);
+			children = (A40000000000000000000011 /* Folder */, A40000000000000000000021 /* Fujifilm */);
 			path = Adapters;
 			sourceTree = "<group>";
 		};
@@ -105,6 +109,12 @@
 			isa = PBXGroup;
 			children = (A20000000000000000000019 /* FolderCaptureSource.swift */);
 			path = Folder;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000021 /* Fujifilm */ = {
+			isa = PBXGroup;
+			children = (A20000000000000000000021 /* FujifilmDiscovery.swift */);
+			path = Fujifilm;
 			sourceTree = "<group>";
 		};
 		A40000000000000000000012 /* Platform */ = {
@@ -164,7 +174,7 @@
 		A70000000000000000000001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (A10000000000000000000001 /* CameraTetherApp.swift in Sources */, A10000000000000000000002 /* DiagnosticView.swift in Sources */, A10000000000000000000013 /* CullView.swift in Sources */, A10000000000000000000014 /* FilmstripView.swift in Sources */, A10000000000000000000015 /* ImageLoader.swift in Sources */, A10000000000000000000016 /* SessionFolders.swift in Sources */, A10000000000000000000017 /* CullStore.swift in Sources */, A10000000000000000000018 /* CaptureSource.swift in Sources */, A10000000000000000000019 /* FolderCaptureSource.swift in Sources */, A10000000000000000000020 /* PlatformShell.swift in Sources */);
+			files = (A10000000000000000000001 /* CameraTetherApp.swift in Sources */, A10000000000000000000002 /* DiagnosticView.swift in Sources */, A10000000000000000000013 /* CullView.swift in Sources */, A10000000000000000000014 /* FilmstripView.swift in Sources */, A10000000000000000000015 /* ImageLoader.swift in Sources */, A10000000000000000000016 /* SessionFolders.swift in Sources */, A10000000000000000000017 /* CullStore.swift in Sources */, A10000000000000000000018 /* CaptureSource.swift in Sources */, A10000000000000000000019 /* FolderCaptureSource.swift in Sources */, A10000000000000000000020 /* PlatformShell.swift in Sources */, A10000000000000000000021 /* FujifilmDiscovery.swift in Sources */, A10000000000000000000022 /* DiagnosticEvent.swift in Sources */);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
@@ -215,6 +225,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Discover a connected camera for tethering diagnostics.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -238,6 +249,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Discover a connected camera for tethering diagnostics.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
