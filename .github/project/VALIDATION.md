@@ -181,6 +181,17 @@ PROGRESS.md cites these. One record per run; keep failed runs.
 | Response | Removed the unavailable callback and its expected log line from the hardware instructions. Camera add/remove callbacks remain the discovery signal. |
 | Follow-up | Rebuild PR #9 and report the first remaining compiler error or the on-device browser log; USB detection has not yet been validated. |
 
+### RUN-20260924-F2 — X-T4 physical iPad USB discovery
+
+| Field | Value |
+| --- | --- |
+| Procedure | W-021 browser observation; discovery portion of F-G1 |
+| Date / operator | 2026-09-23 23:11–23:13 local, 2026-09-24 UTC / Mario |
+| Camera / transport | `X-T4`, `ICTransportTypeUSB`; X-T4 USB mode and cable were not stated with this log |
+| Observed result | `Browser starting`, then `Device added: X-T4; transport=ICTransportTypeUSB; moreComing=false` and `Fujifilm candidate identified; session not opened yet`. After Stop/Start, the same add and identification occurred again. |
+| Conclusion | **Discovery passes** on the physical iPad. The Stop/Start sequence shows re-enumeration by the browser, not physical USB disconnect/reconnect or session access. |
+| Follow-up | Build the D-017 session probe; report open/close or error lines, X-T4 USB mode, physical iPadOS, and connection path. Do not infer file or capture-event access yet. |
+
 ### DOC-20260923-FUJI — Workstream activation
 
 - Work: W-019; decision D-013; documentation only, not a hardware run.

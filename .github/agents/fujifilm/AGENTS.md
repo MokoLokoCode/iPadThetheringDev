@@ -3,11 +3,11 @@
 Adds to [../shared/AGENTS.md](../shared/AGENTS.md).
 
 **Lead: Mario**, per the owner's instruction on 2026-09-23; his colleague leads Sony.
-**Status: physical iPad launch owner-reported; browser discovery implementation authored, not yet compiled/tested on camera.**
+**Status: physical iPad discovery of X-T4 over USB passed; session probe awaiting hardware run.**
 W-020–W-024 in the [shared backlog](../../project/PROGRESS.md) define the X-T4 path.
-`FujifilmDiscovery.swift` is the read-only browser increment. Mario reported on
-2026-09-24 that Diagnostic View launches on his physical iPad. No X-T4 enumeration
-result, session, item callback, or RAW-retention run has been supplied.
+`FujifilmDiscovery.swift` is the read-only browser and session probe. Mario's
+2026-09-23 local-time log reports two X-T4 additions over `ICTransportTypeUSB`.
+No session, item callback, or RAW-retention result has been supplied.
 
 ## Equipment
 
@@ -56,9 +56,10 @@ restrictions, and raw PTP events. No downloads, shutter triggers, storage-settin
 changes, deletions, or speculative vendor commands. Sony's D-002 handshake decision
 does not authorize Fujifilm vendor commands.
 
-The initial browser increment only discovers/removes devices and logs their names.
-It cannot yet enumerate files or respond to physical shutter captures. W-021 stays
-in progress until the SDK-verified session and camera delegates are added.
+The session increment requests an `ICDevice` session after a matching discovery
+and logs its open/close result. It cannot yet enumerate files or respond to
+physical shutter captures. W-021 stays in progress pending the session test and
+camera item callbacks.
 
 ## Gates and work sequence
 

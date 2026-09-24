@@ -1,9 +1,9 @@
 # Run the first CameraTether build
 
-## Fujifilm discovery branch test (W-021)
+## Fujifilm session branch test (W-021)
 
-The iPad scene now has a read-only ImageCaptureCore browser. Run the
-`mario/fujifilm-discovery` branch on your physical iPad Air 4 after reviewing its
+The iPad scene now has a read-only ImageCaptureCore browser and session probe. Run the
+`mario/fujifilm-session-probe` branch on your physical iPad Air 4 after reviewing its
 PR. Xcode may display a camera-access prompt from the usage description added in
 this branch; allow access for this test. The M4 simulator cannot validate the
 physical USB path.
@@ -15,10 +15,10 @@ physical USB path.
 3. Unplug the iPad from the Mac. Set the X-T4 to **USB CARD READER** and use a
    backed-up/test SD card. Connect the X-T4 directly to the iPad with a
    data-capable USB-C cable, then power the camera on. Leave the app foregrounded.
-4. Wait for the log. **Device added** with a name/transport is the first result;
-   **Fujifilm candidate identified** is a name match. Neither means a session is
-   open or a photo transferred. Tap **Stop** then **Start** for a second idle
-   observation, and disconnect the camera when it is idle.
+4. Wait for **Device added**, **requesting camera session**, and **Camera session
+   opened** or **Camera session open failed**. An open session does not mean a
+   photo was transferred. Tap **Stop** while idle and look for **Camera session
+   closed**. Restart for a second observation, then disconnect while idle.
 5. Tap **Share log** to send a sanitized text copy of the result. Record cable,
    hub/no hub, and whether the camera or iPad displayed any permission message.
 
@@ -29,9 +29,8 @@ compile, share the **first compiler error with its file/line** and the full
 remote agent. It does not open sessions, list files, receive shutter events or
 download anything; those capabilities follow the discovery result.
 
-This increment supplies a shared SwiftUI iPad application, not camera detection.
-The screen says **CameraTether is running** and explicitly states that camera
-connection is not implemented. Connecting a camera will have no effect yet.
+The original bootstrap displayed a static diagnostic view. The session probe above
+supersedes that behavior on this branch.
 
 ## Get the project on your Mac
 
