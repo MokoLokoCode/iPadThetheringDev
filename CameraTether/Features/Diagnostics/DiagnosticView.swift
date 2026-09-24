@@ -12,7 +12,7 @@ struct DiagnosticView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
                 Text(status).font(.headline)
-                Text("Discovery only. File events and downloads will be added after the physical USB test.")
+                Text("Camera discovery and session probe. File events and downloads are not implemented yet.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
 

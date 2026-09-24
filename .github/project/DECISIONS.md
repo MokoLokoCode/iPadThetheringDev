@@ -176,3 +176,11 @@ Each decision gets a stable ID. Never delete an entry — mark it **Superseded b
 - Alternatives: Implement browser, session and file-event bridge in one uncompiled PR; a discovery-only increment gives the owner an independently diagnosable USB result first.
 - Rationale: A camera's visibility to iPad ImageCaptureCore is the lowest unverified assumption; a name match only labels a candidate and never establishes full compatibility.
 - Deviations: W-021 remains in progress because session/catalog/items/PTP/marker and hardware evidence are absent. Follow up once the owner reports enumeration. Scope is iPad runtime only; the single target continues compiling for macOS after Xcode feedback.
+
+## D-017: Probe Fujifilm device session after USB discovery
+- Status: Proposed implementation increment; session outcome unverified
+- Date: 2026-09-24
+- Context: Mario's physical iPad twice reported `X-T4` over `ICTransportTypeUSB` using the browser probe (RUN-20260924-F2). That clears discovery but establishes neither a session nor file access.
+- Decision: Set an `ICDeviceDelegate` on the matching camera, request one session, and log the open/close callbacks and errors. Close on idle Stop. Keep the current bounded log and do not request image files, vendor commands, or a camera shutter action.
+- Rationale: Apple documents `requestOpenSession()` and its delegate callback; isolating this step makes failures in session access distinguishable from camera object events.
+- Deviations: W-021 and F-G1 remain incomplete until Mario reports the session result, mode, catalog and disconnect/reconnect behavior. The item delegate is a later increment.
