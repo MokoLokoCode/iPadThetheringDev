@@ -3,11 +3,13 @@
 Adds to [../shared/AGENTS.md](../shared/AGENTS.md).
 
 **Lead: Mario**, per the owner's instruction on 2026-09-23; his colleague leads Sony.
-**Status: physical iPad discovery of X-T4 over USB passed; session probe awaiting hardware run.**
+**Status: USB CARD READER discovery, session and matching 17-file RAW catalog passed; F-G1 awaits a mode-labeled idle reconnect.**
 W-020–W-024 in the [shared backlog](../../project/PROGRESS.md) define the X-T4 path.
-`FujifilmDiscovery.swift` is the read-only browser and session probe. Mario's
-2026-09-23 local-time log reports two X-T4 additions over `ICTransportTypeUSB`.
-No session, item callback, or RAW-retention result has been supplied.
+`FujifilmDiscovery.swift` is a read-only browser, session, and item-event probe.
+Mario's 2026-09-24 log reports repeated X-T4 session opens and two complete
+catalogs of 17 `.RAF` filenames. He confirmed USB CARD READER, RAW-only photo
+format and filename matches on the SD card. RAW retention during tethered
+shooting remains untested (RUN-20260924-F4).
 
 ## Equipment
 
@@ -56,15 +58,15 @@ restrictions, and raw PTP events. No downloads, shutter triggers, storage-settin
 changes, deletions, or speculative vendor commands. Sony's D-002 handshake decision
 does not authorize Fujifilm vendor commands.
 
-The session increment requests an `ICDevice` session after a matching discovery
-and logs its open/close result. It cannot yet enumerate files or respond to
-physical shutter captures. W-021 stays in progress pending the session test and
-camera item callbacks.
+The item increment observes catalog completion, sampled item names, and bounded
+raw PTP event prefixes after a matching session opens. It does not download
+files or establish physical-shutter access. W-021 stays in progress pending the
+catalog test and capture markers.
 
 ## Gates and work sequence
 
 These gates preserve the original X-T4 safety sequence while using the shared
-W-NNN backlog. **All are pending.** Stop at each gate for Mario's actual results;
+W-NNN backlog. **F-G1 is partially verified; no full gate is passed yet.** Stop at each gate for Mario's actual results;
 mock events and another vendor's results cannot pass them.
 
 | Gate | Work | Required evidence |

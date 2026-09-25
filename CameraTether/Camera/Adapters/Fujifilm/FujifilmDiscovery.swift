@@ -1,11 +1,11 @@
 import Combine
+import CoreGraphics
 import Foundation
 import ImageCaptureCore
 
-/// Read-only discovery and session probe. File callbacks follow after the
-/// X-T4 has been observed opening a session on the physical iPad.
+/// Read-only discovery, session and camera item/event probe.
 @MainActor
-final class FujifilmDiscovery: NSObject, ObservableObject, @preconcurrency ICDeviceBrowserDelegate, @preconcurrency ICDeviceDelegate {
+final class FujifilmDiscovery: NSObject, ObservableObject, @preconcurrency ICDeviceBrowserDelegate, @preconcurrency ICCameraDeviceDelegate {
     @Published private(set) var status = "Not browsing"
     @Published private(set) var events: [CameraDiagnosticEvent] = []
 
@@ -13,6 +13,7 @@ final class FujifilmDiscovery: NSObject, ObservableObject, @preconcurrency ICDev
     private var matchedDevice: ICDevice?
     private var running = false
     private var openingSession = false
+    private var catalogReady = false
     private let eventLimit = 200
 
     func start() {
@@ -59,6 +60,7 @@ final class FujifilmDiscovery: NSObject, ObservableObject, @preconcurrency ICDev
                 return
             }
             matchedDevice = device
+            catalogReady = false
             status = "Opening session with \(name)"
             camera.delegate = self
             openingSession = true
@@ -76,6 +78,7 @@ final class FujifilmDiscovery: NSObject, ObservableObject, @preconcurrency ICDev
             device.delegate = nil
             matchedDevice = nil
             openingSession = false
+            catalogReady = false
             status = "Camera removed; searching"
         }
     }
@@ -115,7 +118,74 @@ final class FujifilmDiscovery: NSObject, ObservableObject, @preconcurrency ICDev
         device.delegate = nil
         matchedDevice = nil
         openingSession = false
+        catalogReady = false
         if running { status = "Camera removed; searching" }
+    }
+
+    // MARK: - Camera catalog and event callbacks
+
+    func deviceDidBecomeReady(withCompleteContentCatalog camera: ICCameraDevice) {
+        guard matchedDevice === camera, running else { return }
+        catalogReady = true
+        record("Camera catalog ready; mediaFiles=\(camera.mediaFiles?.count ?? 0)")
+        recordItems(camera.mediaFiles ?? [])
+    }
+
+    func cameraDevice(_ camera: ICCameraDevice, didAdd items: [ICCameraItem]) {
+        guard matchedDevice === camera, running else { return }
+        record("\(catalogReady ? "Items added after catalog ready" : "Catalog items added"): count=\(items.count)")
+        recordItems(items)
+    }
+
+    func cameraDevice(_ camera: ICCameraDevice, didRemove items: [ICCameraItem]) {
+        guard matchedDevice === camera, running else { return }
+        record("Camera items removed: count=\(items.count)")
+        recordItems(items)
+    }
+
+    func cameraDevice(_ camera: ICCameraDevice, didRenameItems items: [ICCameraItem]) {
+        guard matchedDevice === camera, running else { return }
+        record("Camera items renamed: count=\(items.count)")
+        recordItems(items)
+    }
+
+    func cameraDevice(_ camera: ICCameraDevice, didReceivePTPEvent eventData: Data) {
+        guard matchedDevice === camera, running else { return }
+        let prefix = eventData.prefix(32).map { String(format: "%02X", $0) }.joined(separator: " ")
+        record("PTP event: bytes=\(eventData.count); first32=\(prefix)")
+    }
+
+    func cameraDeviceDidChangeCapability(_ camera: ICCameraDevice) {
+        guard matchedDevice === camera, running else { return }
+        record("Camera capability changed")
+    }
+
+    func cameraDeviceDidEnableAccessRestriction(_ device: ICDevice) {
+        guard matchedDevice === device, running else { return }
+        record("Camera access restricted")
+    }
+
+    func cameraDeviceDidRemoveAccessRestriction(_ device: ICDevice) {
+        guard matchedDevice === device, running else { return }
+        record("Camera access restriction removed")
+    }
+
+    func cameraDevice(_ camera: ICCameraDevice, didReceiveMetadata metadata: [AnyHashable: Any]?, for item: ICCameraItem, error: (any Error)?) {
+        guard matchedDevice === camera, running else { return }
+        record("Metadata response: \(item.name ?? "unnamed"); error=\(error?.localizedDescription ?? "none")")
+    }
+
+    func cameraDevice(_ camera: ICCameraDevice, didReceiveThumbnail thumbnail: CGImage?, for item: ICCameraItem, error: (any Error)?) {
+        guard matchedDevice === camera, running else { return }
+        record("Thumbnail response: \(item.name ?? "unnamed"); error=\(error?.localizedDescription ?? "none")")
+    }
+
+    private func recordItems(_ items: [ICCameraItem]) {
+        for item in items.prefix(5) {
+            let kind = item is ICCameraFile ? "file" : "folder"
+            record("  \(kind): \(item.name ?? "unnamed"); handle=\(item.ptpObjectHandle); uti=\(item.uti ?? "unknown")")
+        }
+        if items.count > 5 { record("  ... \(items.count - 5) more items omitted from log") }
     }
 
     private func record(_ message: String) {
